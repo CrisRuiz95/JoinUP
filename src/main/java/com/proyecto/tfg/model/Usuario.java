@@ -1,6 +1,7 @@
 package com.proyecto.tfg.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,7 @@ public class Usuario {
     @Column(name = "d_ap2", length = 45)
     private String ap2;
 
+
     @Column(name = "d_email", unique = true, nullable = false, length = 100)
     private String email;
 
@@ -31,35 +33,11 @@ public class Usuario {
     @Column(name = "d_rol", nullable = false)
     private Rol rol; // ENUM de roles
 
-    // ✅ Campos de dirección directamente en Usuario
-    @Column(name = "dir_tipoVia", length = 45)
-    private String tipoVia;
-
-    @Column(name = "dir_via", length = 45)
-    private String via;
-
-    @Column(name = "dir_numVia", length = 45)
-    private String numVia;
-
-    @Column(name = "dir_piso", length = 45)
-    private String piso;
-
-    @Column(name = "dir_puerta", length = 45)
-    private String puerta;
-
-    @Column(name = "dir_codigo", length = 45)
-    private String codigoPostal;
-
-    @Column(name = "dir_provin", length = 45)
-    private String provincia;
-
-    @Column(name = "dir_pobla", length = 45)
-    private String poblacion;
-
-    @Column(name = "dir_infoExtra", length = 255)
-    private String infoExtra;
-
     // Relaciones
+    @ManyToOne
+    @JoinColumn(name = "id_direccion")
+    private Direccion direccion;
+
     @ManyToOne
     @JoinColumn(name = "id_interes")
     private Interes interes;
@@ -67,7 +45,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<UsuarioEvento> eventos;
 
-    // Getters y setters
     public int getIdCliente() {
         return idCliente;
     }
@@ -124,76 +101,12 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public String getTipoVia() {
-        return tipoVia;
+    public Direccion getDireccion() {
+        return direccion;
     }
 
-    public void setTipoVia(String tipoVia) {
-        this.tipoVia = tipoVia;
-    }
-
-    public String getVia() {
-        return via;
-    }
-
-    public void setVia(String via) {
-        this.via = via;
-    }
-
-    public String getNumVia() {
-        return numVia;
-    }
-
-    public void setNumVia(String numVia) {
-        this.numVia = numVia;
-    }
-
-    public String getPiso() {
-        return piso;
-    }
-
-    public void setPiso(String piso) {
-        this.piso = piso;
-    }
-
-    public String getPuerta() {
-        return puerta;
-    }
-
-    public void setPuerta(String puerta) {
-        this.puerta = puerta;
-    }
-
-    public String getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
-
-    public String getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(String provincia) {
-        this.provincia = provincia;
-    }
-
-    public String getPoblacion() {
-        return poblacion;
-    }
-
-    public void setPoblacion(String poblacion) {
-        this.poblacion = poblacion;
-    }
-
-    public String getInfoExtra() {
-        return infoExtra;
-    }
-
-    public void setInfoExtra(String infoExtra) {
-        this.infoExtra = infoExtra;
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     public Interes getInteres() {
@@ -212,3 +125,4 @@ public class Usuario {
         this.eventos = eventos;
     }
 }
+

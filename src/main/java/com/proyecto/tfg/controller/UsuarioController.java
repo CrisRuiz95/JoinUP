@@ -23,6 +23,7 @@ import java.util.Optional;
  * Incluye endpoints para crear, leer, actualizar y eliminar usuarios.
  */
 
+
 @RestController
 @RequestMapping("/api/usuarios")
 @CrossOrigin(origins = "*")

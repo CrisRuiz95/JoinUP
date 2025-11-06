@@ -13,13 +13,12 @@ public class UsuarioEvento {
     @Column(name = "idUsuarios_Eventos")
     private int idUsuariosEventos;
 
-    // Relación con Usuario
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_cliente", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
     private Usuario usuario;
 
-    // Relación con Evento
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_evento", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_evento")
     private Evento evento;
 }
+
