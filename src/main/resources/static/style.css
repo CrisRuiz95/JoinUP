@@ -1,0 +1,659 @@
+@font-face {
+  font-family: "Modern"; 
+  src: url("fuentes/ModernAesthetic-DemoVersion-Regular.otf");
+}
+
+@font-face {
+    font-family: "Actor" ;
+    src: url("fuentes/Actor-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat" ;
+    src: url("fuentes/MontserratAlternates-Regular.ttf");
+}
+@font-face {
+    font-family: "Montserrat bold" ;
+    src: url("fuentes/MontserratAlternates-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Oswald";
+    src: url("fuentes/Oswald-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Quicksand";
+    src: url("fuentes/Quicksand-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Staatliches" ;
+    src: url("fuentes/Staatliches-Regular.ttf");
+}
+
+*{
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Actor";
+}
+:root{
+  --fondo-principal: #4B6DA7;
+  --texto-principal: #2D3748;
+  --color-marca: #38B2AC;
+  --botones: #F6AD55;
+  --boton-secundario: #FB7D6D;
+  --fondo-secundario: #F5F9FA;
+}
+body{
+    background-color: var(--fondo-principal);
+    width: auto;
+    height: 3656px;
+}
+
+/* HERO IMAGE*/
+#encabezado {
+    width: 100%;
+    height: 1080px;
+    
+}
+.hero {
+    height: 1080px;
+    width: 100%;  
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Hemos redimensionado la imagen a pantalla de portatil */
+    background-image: linear-gradient(to bottom, var(--fondo-principal), #ffffff00), url(imagenes/heroimageR.jpg);
+    background-size: cover;
+    position: absolute;
+    margin: 60px 0px;
+    
+}
+
+.hero-contenido h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  font-family: "Montserrat bold";
+  font-size: 100px;
+  color: white;
+  margin-top: 65px;
+  position: relative;
+  text-align: center;
+  
+}
+
+.hero-descripcion {
+  font-size: 40px;
+  color: white;
+  font-family: "Montserrat bold";
+  position: relative;
+  width: 400px;
+  text-align: center;
+  margin-left: 1375px;
+  margin-top: 400px;
+
+}
+
+
+/* MENU + LOGO*/
+#logo {
+    position: absolute;
+    left: 90px;
+    width: 120px;
+    height: 120px;
+    
+     
+}
+
+#navbar {
+    position: fixed;
+    width: 100%;
+    height: 120px;
+    background-color: white;
+    border-radius: 0 0 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    z-index: 1;
+    transition: top 0.6s ease-in-out; /* para que el scroll del JS sea más suave */
+}
+
+#menuPrincipal {
+    margin-left:295px;
+}
+
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
+    
+}
+
+nav .elementoMenu{
+    padding: 10px 0;
+    border-radius: 50px;
+    cursor: pointer;
+   
+    
+}
+nav .elementoMenu a{
+    text-decoration: none;
+    color: var(--fondo-principal);
+    font-size: 1.5rem;
+    width: 100%;
+    font-family:'Modern';
+   
+    
+}
+
+nav li {
+ display: inline-block;
+ width: auto;
+}
+
+nav .elementoMenu a:hover {
+    color: var(--color-marca); 
+}
+
+#menuSecundario {
+    margin-right:300px;
+}
+
+#cuentaIcono { 
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: 300px;
+    top: 30px;
+  
+}
+
+/* MAIN */
+#fondo-secundario {
+    width: 95%;
+    height: 4500px;
+    background-color: var(--fondo-secundario);
+    margin: 120px auto;
+    padding: 40px 40px;
+    border-radius: 20px;
+    
+}
+
+/* COMO FUNCIONA */ 
+.titulo {
+  color: var(--color-marca);
+  font-size: 100px;
+  font-weight: lighter;
+  margin-top: 90px;
+  margin-bottom: 90px;
+  font-family: 'Staatliches';
+  text-align: center;
+}
+
+.icono img{
+    height: 80px;
+    width: 80px;
+}
+.tarjetas {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+  font-family: "Actor";
+}
+
+.tarjeta {
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid #CDCDCD;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.582);
+  width: 400px;
+  height: 340px;
+  padding: 30px 20px;
+  transition: transform 0.3s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-5px);
+}
+
+.icono {
+  background-color: #f2f6f7;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.tarjeta h3 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-family: "Modern";
+  text-align: center;
+  font-weight: lighter;
+}
+
+.tarjeta p {
+  color: #333;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-family: "Actor";
+  text-align: center;
+}
+
+/*CREAR EVENTO */
+
+#crear-eventos p, #buscar-eventos p {
+    font-family: "Modern";
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.video{
+   
+    margin: -70px;
+      display: flex;
+      justify-content: center; 
+      align-items: center;     
+}
+video{
+     width: 100vh; 
+     height: 100vh;
+}
+.boton-ce{
+     position: absolute;          
+     top: 2325px;
+     left: 43%;
+      background-color: var(--botones);
+      color: white;
+      border: none;
+      width: 250px;
+      height: 80px;
+      padding: 12px 24px;
+      font-family: "Modern";
+      font-size: 22px;
+      border-radius: 50px;
+      z-index: 20;
+      cursor: pointer;
+      
+}
+
+.boton-ce:hover{
+    background-color: var(--boton-secundario);
+}
+
+/* BUSCAR EVENTOS - CARRUSEL */
+#carrusel {
+      position: relative;
+      width: 1500px;     
+      height: auto;     
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.339);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;    
+    }
+
+
+    #evento img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    #carrusel button {
+      position: absolute;
+      border: none;
+      outline: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 5;
+      background-color: #00000000;
+    }
+
+    #anterior {
+      left: 15px; 
+    }
+
+    #siguiente {
+      right: 15px; 
+    }
+
+    #carrusel button img {
+      width: 100px;
+      height: 100px;
+      filter: invert(63%) sepia(87%) saturate(648%) hue-rotate(7deg) brightness(99%) contrast(97%);
+      
+    }
+
+    #carrusel button:hover img {
+    filter: invert(48%) sepia(84%) saturate(439%) hue-rotate(343deg) brightness(100%) contrast(100%);
+    }
+
+.boton-be{
+    position: relative;
+    top: 25px;
+    left: 43%;
+    display: flex;                 
+    align-items: center;            
+    justify-content: center;        
+    gap: 10px;                     
+
+    background-color: var(--botones);
+    border: none;
+    width: 250px;
+    height: 80px;
+    font-size: 22px;
+    border-radius: 50px;
+    z-index: 20;
+    cursor: pointer;
+        
+}
+
+.boton-be:hover{
+    background-color: var(--boton-secundario);
+}
+
+.boton-be span {
+  color: white;
+  font-family: "Modern";
+}
+.boton-be img{
+  width: 40px;
+  height: 40px;
+  margin-left: -10px; 
+
+}
+
+/* CONTACTO */
+
+.contacto-contenido {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 0 70px;
+}
+
+.contacto-imagen img {
+  width: 580px;
+  height: auto;
+  border-radius: 12px;
+
+}
+
+.contacto-formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 554px;
+  text-align: left;
+  font-size: 25px;
+  position: relative;
+
+}
+
+
+.contacto-formulario label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+}
+
+.contacto-formulario textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 25px;
+  
+}
+
+.contacto-formulario input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 20px;
+ 
+}
+
+.contacto-texto {
+  font-size: 20px;
+  margin: 30px 0 30px;
+  text-align: center;
+  font-family: "Modern";
+
+}
+
+.campo-archivo{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.borrar-archivo {
+  background-color: transparent;
+  color: var(--boton-secundario); 
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  
+}
+
+.borrar-archivo:hover {
+  color: #F6AD55; /* Amarillo cálido */
+}
+.boton-enviar {
+  background-color: var(--botones);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 40px;
+  font-size: 22px;
+  width: 250px;
+  height: 80px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-family: "Modern";
+  position: absolute;
+  top: 700px; 
+  left: -200px;
+
+}
+
+.boton-enviar:hover {
+  background-color: var(--boton-secundario);
+}
+
+
+/************** FOOTER **************/
+
+footer {
+  color: #000;
+  height: 220px;
+}
+
+.footer-contenido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-top: -80px;
+}
+
+/* --- Opiniones --- */
+.footer-col .opiniones{
+  font-family: "Actor";
+  font-size: 20px;
+  font-weight: lighter;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.trustpilot {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 16px;
+  width: 300px;
+  margin-top: 5px;
+}
+
+/* --- Redes sociales --- */
+.footer-col .tituloFooter {
+  font-family: "Modern";
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: lighter;
+  margin-top: -40px;
+
+
+}
+
+.redes-sociales {
+  display: flex;
+  gap: 10px;
+}
+
+.redes-sociales img {
+  width: 65px;
+  height: 65px;
+  border-radius: 6px;
+  transition: transform 0.2s ease;
+}
+
+.redes-sociales img:hover {
+  transform: scale(1.1);
+}
+
+/* --- Información --- */
+
+.footer-col h4{
+  font-family: "Staatliches";
+  font-weight: lighter;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+ 
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+  color: #000;
+   font-family: "Actor";
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 1.2em;
+}
+
+.footer-col ul li a:hover {
+  color: var(--color-marca)
+}
+
+.footer-col p{
+  font-family: "Modern";
+  font-weight: lighter;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.ic-telefono, .ic-correo {
+  width: 20px;
+  height: auto;
+}
+
+.footer-col .ic{
+   font-family: "Actor";
+   font-size: 1.2em;
+}
+
+/* --- Suscripción --- */
+.suscripcion-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 50px; 
+}
+
+.suscripcion-footer{
+  margin-top: -40px;
+}
+
+.suscripcion-form input[type="email"] {
+  width: 300px;
+  height: 50px;
+  padding: 10px;
+  border: #575757;
+  border-radius: 6px;
+  background-color: #989898; 
+  text-align: center;
+  font-family: "Modern";
+  margin-left: 50px ;
+}
+
+.suscripcion-form ::placeholder {
+  color: white;
+  font-size: 1.2em;
+}
+
+.checkbox {
+  font-size: 14px;
+  color: white;
+  text-align: center;
+}
+
+.checkbox a {
+  color: var(--color-marca);
+  text-decoration: none;
+}
+
+.checkbox a:hover {
+  text-decoration: underline;
+}
+
+.suscripcion-form button {
+  background-color: var(--botones);
+  color: white;
+  border: none;
+  width: 200px;
+  border-radius: 30px;
+  margin-left: 100px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Modern";
+  margin-top: 10px;
+  font-size: 0.9em;
+  font-weight: lighter;
+}
+
+.suscripcion-form button:hover {
+  background-color: var(--boton-secundario);
+}
+
