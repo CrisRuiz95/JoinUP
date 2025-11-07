@@ -32,7 +32,16 @@ public class UsuarioServiceImpl implements IUsuarioService {
         newUsuario.setAp2(usuario.getAp2());
         newUsuario.setEmail(usuario.getEmail());       // 🔹 importante
         newUsuario.setPassword(usuario.getPassword());
-
+        // Dirección
+        newUsuario.setTipoVia(usuario.getTipoVia());
+        newUsuario.setVia(usuario.getVia());
+        newUsuario.setNumVia(usuario.getNumVia());
+        newUsuario.setPiso(usuario.getPiso());
+        newUsuario.setPuerta(usuario.getPuerta());
+        newUsuario.setCodigoPostal(usuario.getCodigoPostal());
+        newUsuario.setProvincia(usuario.getProvincia());
+        newUsuario.setPoblacion(usuario.getPoblacion());
+        newUsuario.setInfoExtra(usuario.getInfoExtra());
         // Si no viene rol, ponemos el valor por defecto
         if (usuario.getRol() == null) {
             newUsuario.setRol(Rol.GRATUITO);
@@ -40,7 +49,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
             newUsuario.setRol(usuario.getRol());
         }
 
-        newUsuario.setDireccion(usuario.getDireccion());
         newUsuario.setInteres(usuario.getInteres());
 
         return newUsuario;
