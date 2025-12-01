@@ -47,3 +47,14 @@ src: url("../fuentes/Staatliches-Regular.ttf");
 .font-actor {
     font-family: "Actor";
 }
+
+.font-staatliches {
+    font-family: "Staatliches";
+}
+
+.text-xs { font-size: 12px !important; }
+.text-sm { font-size: 14px !important; }
+.text-md { font-size: 16px !important; }
+.text-lg { font-size: 18px !important; }
+.text-xl { font-size: 20px !important; }
+.text-title { font-size: 72px !important;}

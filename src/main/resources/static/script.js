@@ -64,3 +64,14 @@ const inputArchivo = document.getElementById("archivo");
   botonBorrar.addEventListener("click", () => {
     inputArchivo.value = ""; // Limpia el archivo seleccionado
   });
+
+
+/*******************BOTON PARA REDIRIGIR A CREAR EVENTO **********************/
+ document.getElementById("btn-ce").addEventListener("click", function() {
+    window.location.href = "/crear_evento/crear-eventos.html";
+});
+
+/*******************BOTON PARA REDIRIGIR A BUSCAR EVENTO **********************/
+ document.getElementById("btn-be").addEventListener("click", function() {
+    window.location.href = "/busquedaEventos/busqueda.html";
+});

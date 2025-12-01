@@ -5,22 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Up - Login</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../normalize.css">
 </head>
 <body>
 
-    <header> <a href="../index.html" class="header-enlace"><img src="../imagenes/right-chevron_13977818.png" alt="flecha"> <h4 class="titleh4">Ir a la página web</h4> </a></header>
+    <header> <div class="header-enlace"><a href="../index.html" ><img src="../imagenes/right-chevron_13977818.png" alt="flecha"> <h4>Ir a la página web</h4> </a> </div></header>
+
+
 
     <main>    
     <div class="container">
-    <div class="panel-izquierdo">
+    <div class="panel-izquierdo"> <!-- PANEL IZQUIERDO -->
         <div class="bienvenida"><h1>BIENVENIDO</h1></div>
-    <img src="../imagenes/LogoJoinUp.png" alt="LogoJoinUp">
+    <div class="img-logo"><img src="../imagenes/LogoJoinUp.png" alt="LogoJoinUp"></div>
     </div>
 
-    <div class="panel-derecho">
+    <div class="panel-derecho"> <!-- PANEL DERECHO-->
 
         <div class="formulario-login">
-
             <h2>Login</h2>
 
          <form action="#" method="post">
@@ -28,10 +30,10 @@
                 <div class="inputs-login">
                 <input type="text" id="username" name="username" placeholder="Correo electrónico o usuario">
                 <input type="password" id="password" name="password" placeholder="Contraseña">
-                <a href="#" class="olvido_contraseña">¿Has olvidado la contraseña?</a>
+                <a href="#" class="olvido_contrasenha">¿Has olvidado la contraseña?</a>
                 <button type="submit">Iniciar Sesión</button>
                 
-                <button id="token-google" class="google-login" type="submit"> <img src="../imagenes/icons8-logo-de-google-94.png" alt="Google">Iniciar Sesión con Google</button>
+                <button id="token-google" class="google-login" type="submit"> <img src="../imagenes/icons8-logo-de-google-94.png" alt="Google">Iniciar sesión con Google</button>
                 </div>
 
                 <button class="crear-cuenta" type="submit">Crear una cuenta</button>

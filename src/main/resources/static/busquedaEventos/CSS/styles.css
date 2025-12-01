@@ -674,7 +674,7 @@ input:checked + .slider::before {
     border-radius: 8px;
     border: 3px solid var(--boton-secundario);
     transform: rotate(15deg);
-    margin: 2rem; /* separarlo del borde */
+    margin: 2rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.433);
 }
 .etiquetaPrecioPago {
@@ -692,7 +692,7 @@ input:checked + .slider::before {
     border-radius: 8px;
     border: 3px solid var(--botones);
     transform: rotate(15deg);
-    margin: 2rem; /* separarlo del borde */
+    margin: 2rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.433);
 }
 
