@@ -88,6 +88,47 @@ public class UsuarioController {
     }
 
 
+
+
+    @Operation(
+            summary = "Login User REST API",
+            description = "REST API to authenticate a user with email and password"
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Login successful, returns the user details",
+                    content = @Content(
+                            schema = @Schema(implementation = Usuario.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Unauthorized, invalid email or password",
+                    content = @Content(
+                            schema = @Schema(implementation = Response.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "HTTP Status Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = Response.class)
+                    )
+            )
+    })
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Usuario loginRequest) {
+        Optional<Usuario> usuarioOpt = usuarioService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        if (usuarioOpt.isPresent()) {
+            return ResponseEntity.ok(usuarioOpt.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(new Response("401", "Invalid email or password"));
+        }
+    }
+
+
     @Operation(
             summary = "Update User Details REST API",
             description = "REST API to update users details based on ID"

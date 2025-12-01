@@ -3,6 +3,7 @@ package com.proyecto.tfg.controller;
 import com.proyecto.tfg.constants.TFGConstants;
 import com.proyecto.tfg.model.Evento;
 import com.proyecto.tfg.model.Response;
+import com.proyecto.tfg.model.Usuario;
 import com.proyecto.tfg.service.IEventoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -142,6 +143,45 @@ public class EventoController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(eventos);
+    }
+
+    // Archivo: com.proyecto.tfg.controller.EventoController.java
+
+    @GetMapping("/tags")
+    public List<Evento> buscarPorTags(@RequestParam String tag) {
+        return eventoService.findByTags(tag);
+    }
+
+    // ========================
+// ✅ Obtener participantes de un evento
+// ========================
+    @Operation(
+            summary = "Get Participants by Event ID REST API",
+            description = "REST API to fetch the list of users currently registered for a specific event."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Participants retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Event not found"),
+            @ApiResponse(responseCode = "204", description = "Event found, but has no participants"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
+    @GetMapping("/{id}/participantes")
+    public ResponseEntity<List<Usuario>> getParticipantes(@PathVariable int id) {
+        try {
+            List<Usuario> participantes = eventoService.getParticipantes(id);
+
+            if (participantes.isEmpty()) {
+                return ResponseEntity.noContent().build(); // 204 No Content si la lista está vacía
+            }
+
+            return ResponseEntity.ok(participantes); // 200 OK
+
+        } catch (RuntimeException e) {
+            // Captura la RuntimeException si el Evento no fue encontrado por el servicio
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+        }
     }
 
     // ========================

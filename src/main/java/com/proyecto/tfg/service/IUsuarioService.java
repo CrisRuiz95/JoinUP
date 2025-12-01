@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioService {
+
     void createAccount(Usuario usuario);
 
     Optional<Usuario> fetchAccount(int idCliente);
@@ -14,6 +15,9 @@ public interface IUsuarioService {
 
     boolean updateAccount(Usuario usuario);
 
-
     boolean deleteAccount(int idCliente);
+
+
+    // 🔐 Login (email + password)
+    Optional<Usuario> login(String email, String password);
 }

@@ -65,13 +65,66 @@ CREATE TABLE Eventos (
 
 -- Tabla intermedia: Usuarios_Eventos (relación N:M)
 CREATE TABLE Usuarios_Eventos (
-    idUsuarios_Eventos INT AUTO_INCREMENT PRIMARY KEY,
-    id_cliente INT,
-    id_evento INT,
-    FOREIGN KEY (id_cliente) REFERENCES Usuarios(id_cliente)
+    id_usuarios_eventos INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    id_evento INT NOT NULL,
+    CONSTRAINT fk_usuario_evento_cliente
+        FOREIGN KEY (id_cliente) REFERENCES Usuarios(id_cliente)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (id_evento) REFERENCES Eventos(id_evento)
+    CONSTRAINT fk_usuario_evento_evento
+        FOREIGN KEY (id_evento) REFERENCES Eventos(id_evento)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT unique_cliente_evento UNIQUE (id_cliente, id_evento)
+);
+CREATE TABLE Usuarios_Deseados (
+    id_usuario_deseado INT AUTO_INCREMENT PRIMARY KEY,
+
+    id_cliente INT NOT NULL,
+    id_evento INT NOT NULL,
+
+    CONSTRAINT fk_deseado_cliente
+        FOREIGN KEY (id_cliente) REFERENCES Usuarios(id_cliente)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT fk_deseado_evento
+        FOREIGN KEY (id_evento) REFERENCES Eventos(id_evento)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    -- Para que un usuario no pueda marcar dos veces el mismo evento
+    CONSTRAINT unique_deseado_user UNIQUE (id_cliente, id_evento)
+);
+CREATE TABLE pagos (
+    id_pago BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT NOT NULL,
+    monto DOUBLE NOT NULL,
+    moneda VARCHAR(10) NOT NULL,
+    estado VARCHAR(20) NOT NULL,
+    fecha DATETIME NOT NULL,
+    id_transaccion VARCHAR(100),
+
+    CONSTRAINT fk_pago_usuario
+        FOREIGN KEY (id_cliente)
+        REFERENCES Usuarios(id_cliente)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+
+
+
+-- Cambiar idusuario y id evento sea unico y no se pueda unir mas de 1 vez
+-- hacer una tabla nueva de deseados usuarios, para que aparezca los deseados que cada uno ha dado
+-- cambiar a eventos que has ido endpoint
+
+
+--hacer pago endpoint
+--modificar usuario id y modificar intereses(ira dentro de usuarios )
+
+--a eventos si precio >0 es de pago, else gratis
+--eventos añadir localizacion
+
+--mimrar carpeta db y comparar repository mirar de elimnar deb

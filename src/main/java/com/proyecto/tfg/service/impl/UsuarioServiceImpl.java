@@ -1,10 +1,12 @@
-package com.proyecto.tfg.service;
+package com.proyecto.tfg.service.impl;
 
 import com.proyecto.tfg.exception.UserAlreadyExistsException;
 import com.proyecto.tfg.model.Rol;
 import com.proyecto.tfg.model.Usuario;
-import com.proyecto.tfg.service.db.UsuarioServiceJpa;
+import com.proyecto.tfg.repository.UsuariosRepository;
+import com.proyecto.tfg.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,24 +16,34 @@ import java.util.Optional;
 public class UsuarioServiceImpl implements IUsuarioService {
 
     @Autowired
-    private UsuarioServiceJpa repo;
+    private UsuariosRepository repo;
+
+    // 🔐 BCrypt para encriptar y comprobar contraseñas
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     @Override
     public void createAccount(Usuario usuario) {
         Optional<Usuario> optionalUsuario = repo.findByEmail(usuario.getEmail());
         if (optionalUsuario.isPresent()) {
-            throw new UserAlreadyExistsException("Customer already registered with given mobileNumber " + usuario.getEmail());
+            throw new UserAlreadyExistsException("Customer already registered with given email " + usuario.getEmail());
         }
+
+        // Guardar usuario con password encriptada
         repo.save(createNewAccount(usuario));
     }
+
+
     private Usuario createNewAccount(Usuario usuario) {
         Usuario newUsuario = new Usuario();
         newUsuario.setNombre(usuario.getNombre());
         newUsuario.setAp1(usuario.getAp1());
         newUsuario.setAp2(usuario.getAp2());
-        newUsuario.setEmail(usuario.getEmail());       // 🔹 importante
-        newUsuario.setPassword(usuario.getPassword());
+        newUsuario.setEmail(usuario.getEmail());
+
+        // 🔐 ENCRIPTAR PASSWORD CON BCRYPT
+        newUsuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
         // Dirección
         newUsuario.setTipoVia(usuario.getTipoVia());
         newUsuario.setVia(usuario.getVia());
@@ -42,7 +54,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
         newUsuario.setProvincia(usuario.getProvincia());
         newUsuario.setPoblacion(usuario.getPoblacion());
         newUsuario.setInfoExtra(usuario.getInfoExtra());
-        // Si no viene rol, ponemos el valor por defecto
+
+        // Rol por defecto
         if (usuario.getRol() == null) {
             newUsuario.setRol(Rol.GRATUITO);
         } else {
@@ -54,6 +67,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return newUsuario;
     }
 
+
     @Override
     public Optional<Usuario> fetchAccount(int idCliente) {
         return repo.findById(idCliente);
@@ -61,17 +75,23 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public List<Usuario> findAll() {
-    return repo.findAll();
+        return repo.findAll();
     }
+
 
     @Override
     public boolean updateAccount(Usuario usuario) {
         if (repo.existsById(usuario.getIdCliente())) {
-            repo.save(usuario); // save() actualiza si el ID ya existe
-            return true;         // actualización exitosa
-        } else {
-            return false;        // no existe el usuario a actualizar
+
+            // Si se actualiza password, la volvemos a encriptar
+            if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
+                usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            }
+
+            repo.save(usuario);
+            return true;
         }
+        return false;
     }
 
 
@@ -80,9 +100,28 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Optional<Usuario> usuarioOpt = repo.findById(idCliente);
         if (usuarioOpt.isPresent()) {
             repo.delete(usuarioOpt.get());
-            return true; // Eliminación exitosa
+            return true;
         }
-        return false; // Usuario no encontrado
+        return false;
     }
 
+
+    // 🔐 Login comparando contraseña con BCrypt
+    @Override
+    public Optional<Usuario> login(String email, String password) {
+        Optional<Usuario> userOpt = repo.findByEmail(email);
+
+        if (userOpt.isEmpty()) {
+            return Optional.empty(); // Usuario no existe
+        }
+
+        Usuario user = userOpt.get();
+
+        // Comparar contraseña ingresada con la encriptada
+        if (passwordEncoder.matches(password, user.getPassword())) {
+            return Optional.of(user); // Login OK
+        }
+
+        return Optional.empty(); // Contraseña incorrecta
+    }
 }

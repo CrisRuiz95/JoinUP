@@ -1,21 +1,24 @@
-package com.proyecto.tfg.service;
+package com.proyecto.tfg.service.impl;
 
 import com.proyecto.tfg.exception.UserAlreadyExistsException;
 import com.proyecto.tfg.model.Evento;
 import com.proyecto.tfg.model.Usuario;
-import com.proyecto.tfg.service.db.EventoServiceJpa;
+import com.proyecto.tfg.model.UsuarioEvento;
+import com.proyecto.tfg.repository.EventosRepository;
+import com.proyecto.tfg.service.IEventoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventoServiceImpl implements IEventoService {
 
     @Autowired
-    private EventoServiceJpa repo;
+    private EventosRepository repo;
 
     @Override
     public List<Evento> listAll() {
@@ -131,8 +134,29 @@ public class EventoServiceImpl implements IEventoService {
         }
     }
 
+    @Override
+    public List<Usuario> getParticipantes(int idEvento) {
+        Optional<Evento> eventoOpt = repo.findById(idEvento);
 
-    // ===== Métodos personalizados =====
+        if (eventoOpt.isEmpty()) {
+            throw new RuntimeException("Evento no encontrado con ID: " + idEvento);
+        }
+
+        // Suponiendo que Evento.getUsuarios() devuelve la lista de usuarios asociados
+        // a través de la tabla intermedia (UsuarioEvento)
+        return eventoOpt.get().getUsuarios()
+                .stream()
+                .map(UsuarioEvento::getUsuario)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<Evento> findByTags(String tag) {
+        return repo.findByTag1ContainingIgnoreCaseOrTag2ContainingIgnoreCaseOrTag3ContainingIgnoreCase(
+                tag, tag, tag
+        );
+    }
+
+
 
 
 }
