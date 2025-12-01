@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JoinUp - Registro</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/normalize.css">
 </head>
 <body>
 
 <header>
     <div class="imagen-header">
-    <a href="../index.html">
-    <img class="logo" src="../imagenes/logotipoJOINUP.png" alt="logo">
-    </a>
-
-    <a class="login-link" href="#">¿Ya tienes cuenta? Inicia sesión</a></div>
+    <a href="../index.html"><div class="logo"> <img src="../imagenes/logotipoJOINUP.png" alt="logo"> </div></a>
+    <a class="login-link" href="#">¿Ya tienes cuenta? Inicia sesión</a>
+    </div>
 </header>
 
 <!-- PASOS SUPERIORES -->
@@ -49,7 +48,7 @@
             <div class="cp-nombre">
                 <label>Provincia</label>
                  <select>
-                        <option value="">Seleccione una provincia</option>
+                        <option value="" disabled selected>Seleccione una provincia</option>
                         <option>A Coruña</option>
                         <option>Álava</option>
                         <option>Albacete</option>
@@ -113,7 +112,7 @@
         <label>Contraseña</label>
         <input type="password">
 
-        <button class="btn" data-paso="2">Confirmar</button>
+        <div class="btn" data-paso="2"><button class="btn-panel-uno" >Confirmar</button></div>
     </section>
 
     <!-- PANEL 2 -->
@@ -132,12 +131,11 @@
             <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
         </div>
 
-        <button class="btn" data-paso="3">Confirmar</button>
+        <div class="btn" data-paso="3"><button class="btn-panel-dos">Confirmar</button></div>
     </section>
 
     <!-- PANEL 3 -->
-     <div class="cp-nombre columna-tres">
-    <section class="panel tipo-cuenta">
+     <section class="panel">
         <h2>Tipo de cuenta</h2>
 
         <label class="opcion">
@@ -158,7 +156,7 @@
         </div>
         </label>
 
-        <button class="btn centrar" data-paso="4">Confirmar</button>
+        <div class="btn" data-paso="4"><button class="btn-panel-tres">Confirmar</button></div>
     </section>
 
     <!-- PANEL 4 -->
@@ -166,9 +164,8 @@
         <h2>Confirmación</h2>
         <p class="confirmacion">Revisa todos tus datos antes de proceder a enviarlos</p>
 
-        <button class="btn enviar centrar">Enviar</button>
+        <div class="btn"><button class="btn-panel-cuatro">Enviar</button></div>
     </section>
-    </div>
 </main>
 
 <script src="script.js"></script>
