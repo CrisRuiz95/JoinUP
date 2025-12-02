@@ -21,4 +21,6 @@ public interface IEventoService {
     boolean delete(Integer id);
     List<Evento> findByTitulo(String titulo);
     Evento updateEvento(int idEvento, Evento updatedEvento);
+    public List<Usuario> getParticipantes(int idEvento);
+    List<Evento> findByTags(String tag);
 }

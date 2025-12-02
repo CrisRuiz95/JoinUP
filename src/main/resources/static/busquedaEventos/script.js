@@ -353,5 +353,5 @@ function activarBotonesEnClon(tarjeta) {
 
 /*******************BOTON PARA REDIRIGIR A CREAR EVENTO **********************/
  document.getElementById("btn-ce").addEventListener("click", function() {
-    window.location.href = "/crear_evento/crear-eventos.html";
+    window.location.href = "../crear_evento/crear-eventos.html";
 });

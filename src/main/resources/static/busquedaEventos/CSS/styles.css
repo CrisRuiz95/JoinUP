@@ -637,6 +637,10 @@ input:checked + .slider::before {
     border: none;
     border-radius: 2rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.unirse:hover{
+    background-color: var(--botones);
 }
 .favorito {
     width: 5rem;

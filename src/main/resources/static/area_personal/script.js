@@ -5,25 +5,19 @@
     tabs.forEach((tab, index) => {
         tab.addEventListener("click", () => {
 
-            
             tabs.forEach(btn => btn.classList.remove("active"));
             tab.classList.add("active");
-
-            
+   
             pantallas.forEach(p => p.classList.remove("visible"));
 
-           
             switch(index) {
                 case 0:
                     document.getElementById("pantalla-info").classList.add("visible");
                     break;
                 case 1:
                     document.getElementById("pantalla-deseados").classList.add("visible");
-                    break;
+                    break;                      
                 case 2:
-                    document.getElementById("pantalla-eventos").classList.add("visible");
-                    break;
-                case 3:
                     document.getElementById("pantalla-ajustes").classList.add("visible");
                     break;
             }
@@ -60,4 +54,31 @@ avatarInput.addEventListener("change", function () {
 borrarIcono.addEventListener("click", () => {
     avatarImg.src = originalAvatar;  
     avatarInput.value = "";         
+});
+
+
+//JS para los intereses
+const intereses = document.querySelectorAll('label.interes');
+let seleccionados = []; // Guardará las etiquetas seleccionadas
+
+intereses.forEach(interes => {
+    interes.addEventListener('click', () => {
+
+        // Si ya está seleccionado lo podemos quitar
+        if (interes.classList.contains('selected')) {
+            interes.classList.remove('selected');
+            seleccionados = seleccionados.filter(i => i !== interes);
+            return;
+        }
+
+        // Si ya hay 3 seleccionados, eliminamos el primero
+        if (seleccionados.length >= 3) {
+            const primero = seleccionados.shift(); 
+            primero.classList.remove('selected');
+        }
+
+        // Agregamos el nuevo interés
+        interes.classList.add('selected');
+        seleccionados.push(interes);
+    });
 });

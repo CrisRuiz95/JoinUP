@@ -78,6 +78,7 @@ public class Evento {
     private String infoExtra;
 
     @OneToMany(mappedBy = "evento")
+    @com.fasterxml.jackson.annotation.JsonIgnore // <--- ¡IMPORTANTE!
     private List<UsuarioEvento> usuarios;
 
     public Integer getIdEvento() {

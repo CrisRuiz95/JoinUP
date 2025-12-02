@@ -24,7 +24,7 @@ public class Usuario {
     @Column(name = "d_email", unique = true, nullable = false, length = 100)
     private String email;
 
-    @Column(name = "d_password", nullable = false, length = 45)
+    @Column(name = "d_password", nullable = false, length = 90)
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -65,6 +65,7 @@ public class Usuario {
     private Interes interes;
 
     @OneToMany(mappedBy = "usuario")
+    @com.fasterxml.jackson.annotation.JsonIgnore // <--- ¡IMPORTANTE!
     private List<UsuarioEvento> eventos;
 
     // Getters y setters
