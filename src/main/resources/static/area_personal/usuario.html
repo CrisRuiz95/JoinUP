@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area de usuario</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../normalize.css">
 </head>
 <body>
     
-    <div class="container">
-
-    <header class="header">
+    <div class="container"> <!-- Tarjeta que contiene todo el contenido como background-->
+    <header>
         <nav class="nav">
-            <a href="../index.html" class="nav-link">Home</a>
-            <a href="#" class="nav-link">Hacer premium</a> <!-- Recordar que solo tiene que aparecer esta pestaña para los usuarios que no son premiums -->
+            <a href="../index.html">Home</a>
+            <a href="../pagos/pagos-1.html">Hacer premium</a> <!-- Recordar que solo tiene que aparecer esta pestaña para los usuarios que no son premium -->
         </nav>
 
         <button class="btn-logout">Cerrar sesión</button>
@@ -22,72 +22,63 @@
 
     <main class="main-container">
 
-        <section class="panel-izquierdo">
+        <section class="panel-izquierdo"> <!-- PANEL IZQUIERDO -->
+          <div class="perfil-usuario">
 
-            <div class="perfil-usuario">
-                <div class="avatar-usuario">
-            <img src="../imagenes/usuario.png"
-                class="avatar" alt="Usuario">
-                 <img class="editar-icono"
-             src="https://img.icons8.com/windows/64/create-new.png"
-             alt="editar">
+            <div class="avatar-usuario">
+            <!-- avatar foto--> 
+            <img src="../imagenes/usuario.png" class="avatar" alt="Usuario">
+            <!-- icono editar foto-->     
+            <img class="editar-icono" src="https://img.icons8.com/windows/64/create-new.png" alt="editar-avatar">
               <input type="file" id="avatar-input" accept="image/*" style="display:none;">
-
-              
+              <!-- icono borrar foto--> 
             <img class="borrar-foto" width="64" height="64" src="https://img.icons8.com/material-outlined/96/remove-image.png" alt="eliminar-avatar"/>
             </div> <!-- cierre avatar-usuario -->
 
-
             <h3 class="usuario-nombre">Marina Blanco</h3>
-
-            </div>
             <p class="usuario-email">marinablanco@example.com</p>
-
+            </div>
+            
             <nav class="menu">
-                <button class="menu-item">Información personal</button>
+                <button class="menu-item active">Información personal</button>
                 <button class="menu-item">Deseados</button>
-                <button class="menu-item">Mis eventos</button>
-                <button class="menu-item active">Ajustes</button>
+                <button class="menu-item ">Ajustes</button>
             </nav>
-
-
         </section>
 
-        <section class="panel-derecho">
 
-            <div id="pantalla-info" class="pantalla">
-            <h2 class="titulo-seccion">Información personal</h2>
+
+        <section class="panel-derecho"> <!-- PANEL DERECHO -->
+
+            <!--PANTALLA INFORMACION-->
+            <div id="pantalla-info" class="pantalla visible">
+            <h2>Información personal</h2>
             <p>Aquí irá la Información personal: 
                  El flujo que podíamos hacer es que la información registrada en el registro saliera en información personal y luego los ajustes asi como lo tengo por el hecho de si queremos cambiarlo, como por ejemplo si nos mudamos.
             </p>
             </div>
 
+            <!--PANTALLA DESEADOS-->
             <div id="pantalla-deseados" class="pantalla">
-                <h2 class="titulo-seccion">Deseados</h2>
+                <h2>Eventos Deseados</h2>
                 <p>Aquí irán tus eventos deseados...</p>
             </div>
 
-            <div id="pantalla-eventos" class="pantalla">
-                <h2 class="titulo-seccion">Mis eventos</h2>
-                <p>Aquí irán tus eventos creados o participados...</p>
-            </div>
-
-            <div id="pantalla-ajustes" class="pantalla visible">
-                <h2 class="titulo-seccion">Ajustes</h2>
+            <!--PANTALLA AJUSTES-->
+            <div id="pantalla-ajustes" class="pantalla">
+                <h2>Ajustes</h2>
                 <form class="form-grid">
 
                 <div class="campo">
                     <label>Fecha de nacimiento</label>
                     <input type="date">
-                </div>
+                </div> <!-- cierre fecha  -->
 
-                <div class="fila-ubicacion">
-               
+            <div class="fila-ubicacion">
                 <div class="campo campo-ciudad">
                     <label>Ciudad</label>
                     <input type="text">
-                </div>
-
+                </div> <!-- cierre ciudad -->
                 <div class="campo campo-provincia">
                     <label>Provincia</label>
                     <select>
@@ -144,8 +135,7 @@
                         <option>Zaragoza</option>
                     </select>
                 </div>
-
-                </div> <!-- cierre fila-ubicacion -->
+            </div> <!-- cierre fila-ubicacion -->
 
                 <div class="campo">
                     <label>Teléfono</label>
@@ -174,21 +164,26 @@
                     </div>
                 </div> <!-- cierre campo redes-sociales -->
 
-                <div class="campo campo-textarea">
+
+    <div class="campo campo-intereses">
                     <label>Intereses</label>
-                    <textarea></textarea>
-                </div>
+        <div class="intereses">
+            <label class="interes"><img src="../imagenes/music_5662049.png"> Música</label>
+            <label class="interes"><img src="../imagenes/sports_857492.png"> Deportes</label>
+            <label class="interes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
+            <label class="interes"><img src="../imagenes/cinema_469932.png"> Cine</label>
+            <label class="interes"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
+            <label class="interes"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
+            <label class="interes"><img src="../imagenes/network_881930.png"> Networking</label>
+            <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
+        </div>
+    </div>
 
-                <div class="campo campo-textarea">
-                    <label>Comentarios y valoraciones</label>
-                    <textarea></textarea>
-                </div>
                 <button type="submit" class="btn-guardar">Guardar cambios</button>
-            </form>
-
+            </form> 
             </div>
-
         </section>
+
 
     </main>
 
