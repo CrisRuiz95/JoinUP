@@ -1,14 +1,6 @@
 CREATE DATABASE IF NOT EXISTS eventos_db;
 USE eventos_db;
 
--- Tabla: Intereses
-CREATE TABLE Intereses (
-    id_interes INT AUTO_INCREMENT PRIMARY KEY,
-    int_v1 VARCHAR(45),
-    int_v2 VARCHAR(45),
-    int_v3 VARCHAR(45)
-);
-
 CREATE TABLE Usuarios (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     d_nombre VARCHAR(45),

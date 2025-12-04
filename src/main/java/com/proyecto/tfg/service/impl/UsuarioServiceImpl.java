@@ -83,18 +83,78 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public boolean updateAccount(Usuario usuario) {
-        if (repo.existsById(usuario.getIdCliente())) {
+        return repo.findById(usuario.getIdCliente()).map(existing -> {
 
-            // Si se actualiza password, la volvemos a encriptar
-            if (usuario.getPassword() != null && !usuario.getPassword().isEmpty()) {
-                usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            // Datos personales
+            if (usuario.getNombre() != null)
+                existing.setNombre(usuario.getNombre());
+
+            if (usuario.getAp1() != null)
+                existing.setAp1(usuario.getAp1());
+
+            if (usuario.getAp2() != null)
+                existing.setAp2(usuario.getAp2());
+
+            if (usuario.getEmail() != null)
+                existing.setEmail(usuario.getEmail());
+
+            // Password: si viene, se encripta (igual que en createNewAccount)
+            if (usuario.getPassword() != null && !usuario.getPassword().isBlank()) {
+                existing.setPassword(passwordEncoder.encode(usuario.getPassword()));
             }
 
-            repo.save(usuario);
+            // Dirección
+            if (usuario.getTipoVia() != null)
+                existing.setTipoVia(usuario.getTipoVia());
+
+            if (usuario.getVia() != null)
+                existing.setVia(usuario.getVia());
+
+            if (usuario.getNumVia() != null)
+                existing.setNumVia(usuario.getNumVia());
+
+            if (usuario.getPiso() != null)
+                existing.setPiso(usuario.getPiso());
+
+            if (usuario.getPuerta() != null)
+                existing.setPuerta(usuario.getPuerta());
+
+            if (usuario.getCodigoPostal() != null)
+                existing.setCodigoPostal(usuario.getCodigoPostal());
+
+            if (usuario.getProvincia() != null)
+                existing.setProvincia(usuario.getProvincia());
+
+            if (usuario.getPoblacion() != null)
+                existing.setPoblacion(usuario.getPoblacion());
+
+            if (usuario.getInfoExtra() != null)
+                existing.setInfoExtra(usuario.getInfoExtra());
+
+            // Interiores
+            if (usuario.getIntV1() != null)
+                existing.setIntV1(usuario.getIntV1());
+
+            if (usuario.getIntV2() != null)
+                existing.setIntV2(usuario.getIntV2());
+
+            if (usuario.getIntV3() != null)
+                existing.setIntV3(usuario.getIntV3());
+
+            // Imagen
+            if (usuario.getImagen() != null)
+                existing.setImagen(usuario.getImagen());
+
+            // Rol (solo si viene, no se modifica automáticamente)
+            if (usuario.getRol() != null)
+                existing.setRol(usuario.getRol());
+
+            repo.save(existing);
             return true;
-        }
-        return false;
+
+        }).orElse(false);
     }
+
 
 
     @Override

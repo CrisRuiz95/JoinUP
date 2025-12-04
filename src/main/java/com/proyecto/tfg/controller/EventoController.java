@@ -5,12 +5,15 @@ import com.proyecto.tfg.model.Evento;
 import com.proyecto.tfg.model.Response;
 import com.proyecto.tfg.model.Usuario;
 import com.proyecto.tfg.service.IEventoService;
+
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,19 +31,18 @@ public class EventoController {
     private IEventoService eventoService;
 
 
-
     // ========================
-    // ✅ Crear un nuevo evento
+    // CREATE EVENT
     // ========================
     @Operation(
-            summary = "Create Event REST API",
-            description = "REST API to create a new event"
+            summary = "Create Event",
+            description = "Creates a new event and stores it in the database."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Event created successfully"),
-            @ApiResponse(responseCode = "417", description = "Expectation Failed"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "201", description = "Event created successfully",
+                    content = @Content(schema = @Schema(implementation = Response.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid event data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PostMapping("/create")
     public ResponseEntity<Response> createEvent(@Valid @RequestBody Evento evento) {
@@ -50,27 +52,27 @@ public class EventoController {
                 .body(new Response(TFGConstants.STATUS_201, TFGConstants.MESSAGE_201));
     }
 
+
     // ========================
-    // ✅ Actualizar un evento existente
+    // UPDATE EVENT
     // ========================
     @Operation(
-            summary = "Update Event REST API",
-            description = "REST API to update an existing event by ID"
+            summary = "Update Event",
+            description = "Updates an existing event based on its ID."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Event updated successfully"),
-            @ApiResponse(responseCode = "417", description = "Expectation Failed"),
             @ApiResponse(responseCode = "404", description = "Event not found"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "400", description = "Invalid event data"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<Response> actualizarEvento(@PathVariable int id, @Valid @RequestBody Evento evento) {
+    public ResponseEntity<Response> updateEvent(@PathVariable int id, @Valid @RequestBody Evento evento) {
         try {
             Evento updated = eventoService.updateEvento(id, evento);
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(new Response(TFGConstants.STATUS_200, "Evento actualizado correctamente."));
+                    .body(new Response(TFGConstants.STATUS_200, "Event updated successfully."));
         } catch (RuntimeException e) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
@@ -78,132 +80,145 @@ public class EventoController {
         }
     }
 
+
     // ========================
-    // ✅ Listar todos los eventos
+    // LIST ALL EVENTS
     // ========================
     @Operation(
-            summary = "List All Events REST API",
-            description = "REST API to fetch all events from the database"
+            summary = "List All Events",
+            description = "Returns a list of all registered events."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Events retrieved successfully",
                     content = @Content(schema = @Schema(implementation = Evento.class))),
             @ApiResponse(responseCode = "204", description = "No events found"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Evento.class)))
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/all")
-    public ResponseEntity<List<Evento>> listarTodos() {
+    public ResponseEntity<List<Evento>> listAll() {
         List<Evento> eventos = eventoService.listAll();
-        if (eventos.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content
-        }
-        return ResponseEntity.ok(eventos); // 200 OK
-    }
-
-    // ========================
-    // ✅ Obtener un evento por ID
-    // ========================
-    @Operation(
-            summary = "Get Event by ID REST API",
-            description = "REST API to fetch event details by ID"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Event found successfully"),
-            @ApiResponse(responseCode = "404", description = "Event not found"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Evento.class)))
-    })
-    @GetMapping("/detalle/{id}")
-    public ResponseEntity<Evento> obtenerEvento(@PathVariable int id) {
-        Optional<Evento> optionalEvento = eventoService.fetchEvento(id);
-
-        return optionalEvento
-                .map(evento -> ResponseEntity.ok(evento))          // 200 OK con el evento
-                .orElseGet(() -> ResponseEntity.notFound().build()); // 404 si no existe
-    }
-
-    // ========================
-    //  Buscar eventos por título
-    // ========================
-    @Operation(
-            summary = "Search Events by Title REST API",
-            description = "REST API to search events by partial title match"
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Events found successfully"),
-            @ApiResponse(responseCode = "204", description = "No events found"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Evento.class)))
-    })
-    @GetMapping("/buscar")
-    public ResponseEntity<List<Evento>> buscarPorTitulo(@RequestParam("titulo") String titulo) {
-        List<Evento> eventos = eventoService.findByTitulo(titulo);
         if (eventos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(eventos);
     }
 
-    // Archivo: com.proyecto.tfg.controller.EventoController.java
 
+    // ========================
+    // GET EVENT BY ID
+    // ========================
+    @Operation(
+            summary = "Get Event by ID",
+            description = "Fetches a specific event using its ID."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Event found",
+                    content = @Content(schema = @Schema(implementation = Evento.class))),
+            @ApiResponse(responseCode = "404", description = "Event not found")
+    })
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<Evento> getEvent(@PathVariable int id) {
+        Optional<Evento> optionalEvento = eventoService.fetchEvento(id);
+
+        return optionalEvento
+                .map(evento -> ResponseEntity.ok(evento))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    // ========================
+    // SEARCH BY TITLE
+    // ========================
+    @Operation(
+            summary = "Search Events by Title",
+            description = "Returns events that match the given title, either partially or fully."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Events found",
+                    content = @Content(schema = @Schema(implementation = Evento.class))),
+            @ApiResponse(responseCode = "204", description = "No events match the title"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Evento>> searchByTitle(@RequestParam("titulo") String title) {
+        List<Evento> eventos = eventoService.findByTitulo(title);
+        if (eventos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(eventos);
+    }
+
+
+    // ========================
+    // SEARCH BY TAGS
+    // ========================
+    @Operation(
+            summary = "Search Events by Tag",
+            description = "Returns events that contain the given tag."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Events found"),
+            @ApiResponse(responseCode = "204", description = "No events found with the given tag")
+    })
     @GetMapping("/tags")
-    public List<Evento> buscarPorTags(@RequestParam String tag) {
+    public List<Evento> searchByTags(@RequestParam String tag) {
         return eventoService.findByTags(tag);
     }
 
+
     // ========================
-// Obtener participantes de un evento
-// ========================
+    // GET PARTICIPANTS OF AN EVENT
+    // ========================
     @Operation(
-            summary = "Get Participants by Event ID REST API",
-            description = "REST API to fetch the list of users currently registered for a specific event."
+            summary = "Get Participants of an Event",
+            description = "Retrieves users currently registered for a specific event."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Participants retrieved successfully"),
+            @ApiResponse(responseCode = "200", description = "Participants retrieved successfully",
+                    content = @Content(schema = @Schema(implementation = Usuario.class))),
+            @ApiResponse(responseCode = "204", description = "No participants found"),
             @ApiResponse(responseCode = "404", description = "Event not found"),
-            @ApiResponse(responseCode = "204", description = "Event found, but has no participants"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @GetMapping("/{id}/participantes")
-    public ResponseEntity<List<Usuario>> getParticipantes(@PathVariable int id) {
+    public ResponseEntity<List<Usuario>> getParticipants(@PathVariable int id) {
         try {
             List<Usuario> participantes = eventoService.getParticipantes(id);
 
             if (participantes.isEmpty()) {
-                return ResponseEntity.noContent().build(); // 204 No Content si la lista está vacía
+                return ResponseEntity.noContent().build();
             }
 
-            return ResponseEntity.ok(participantes); // 200 OK
+            return ResponseEntity.ok(participantes);
 
         } catch (RuntimeException e) {
-            // Captura la RuntimeException si el Evento no fue encontrado por el servicio
-            return ResponseEntity.notFound().build(); // 404 Not Found
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
+
     // ========================
-    //  Eliminar un evento por ID
+    // DELETE EVENT
     // ========================
     @Operation(
-            summary = "Delete Event REST API",
-            description = "REST API to delete an event by ID"
+            summary = "Delete Event",
+            description = "Deletes an event based on its ID."
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Event deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Event not found"),
-            @ApiResponse(responseCode = "500", description = "Internal Server Error",
-                    content = @Content(schema = @Schema(implementation = Response.class)))
+            @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminar(@PathVariable Integer id) {
-        boolean eliminado = eventoService.delete(id);
-        if (eliminado) {
-            return ResponseEntity.ok("Evento eliminado correctamente.");
+    public ResponseEntity<String> deleteEvent(@PathVariable Integer id) {
+        boolean deleted = eventoService.delete(id);
+
+        if (deleted) {
+            return ResponseEntity.ok("Event deleted successfully.");
         } else {
-            return ResponseEntity.status(404).body("Evento no encontrado.");
+            return ResponseEntity.status(404).body("Event not found.");
         }
     }
 

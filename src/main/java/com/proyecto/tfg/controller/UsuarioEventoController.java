@@ -1,7 +1,11 @@
 package com.proyecto.tfg.controller;
 
-import com.proyecto.tfg.model.UsuarioEvento;
 import com.proyecto.tfg.service.IUsuarioEventoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,41 +13,68 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/inscripciones")
+@CrossOrigin(origins = "*")
 public class UsuarioEventoController {
 
     @Autowired
-    private IUsuarioEventoService usuarioEventoService;
+    private IUsuarioEventoService eventRegistrationService;
 
-    // POST: /api/inscripciones/unirse?idUsuario=1&idEvento=5
+    // -------------------------------------------------------------------
+    // JOIN EVENT
+    // -------------------------------------------------------------------
+    @Operation(
+            summary = "Join an event",
+            description = "Registers a user in a specific event. Returns a success message instead of the entity."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User successfully registered"),
+            @ApiResponse(responseCode = "400", description = "Invalid request or business rule violation",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @PostMapping("/unirse")
-    public ResponseEntity<?> unirse(@RequestParam int idUsuario,
-                                    @RequestParam int idEvento) {
+    public ResponseEntity<?> joinEvent(
+            @RequestParam int idUsuario,
+            @RequestParam int idEvento) {
         try {
-            // El servicio aún crea la inscripción, pero el controlador
-            // ignora el objeto devuelto por el servicio.
-            usuarioEventoService.unirseAEvento(idUsuario, idEvento);
+            eventRegistrationService.unirseAEvento(idUsuario, idEvento);
 
-            // 💡 CAMBIO: Devolvemos un String en lugar de la entidad
-            return new ResponseEntity<>("TE HAS UNIDO CORRECTAMENTE", HttpStatus.OK); // O HttpStatus.CREATED
+            return new ResponseEntity<>("Successfully joined the event", HttpStatus.OK);
 
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
         } catch (Exception e) {
-            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // DELETE: /api/inscripciones/desunirse?idUsuario=1&idEvento=5
+    // -------------------------------------------------------------------
+    // LEAVE EVENT
+    // -------------------------------------------------------------------
+    @Operation(
+            summary = "Leave an event",
+            description = "Removes the user's registration from an event."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successfully unregistered"),
+            @ApiResponse(responseCode = "404", description = "Registration not found",
+                    content = @Content(schema = @Schema(implementation = String.class))),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(schema = @Schema(implementation = String.class)))
+    })
     @DeleteMapping("/desunirse")
-    public ResponseEntity<?> desunirse(@RequestParam int idUsuario,
-                                       @RequestParam int idEvento) {
+    public ResponseEntity<?> leaveEvent(
+            @RequestParam int idUsuario,
+            @RequestParam int idEvento) {
 
-        boolean eliminado = usuarioEventoService.desunirseDeEvento(idUsuario, idEvento);
+        boolean removed = eventRegistrationService.desunirseDeEvento(idUsuario, idEvento);
 
-        if (eliminado) {
-            return new ResponseEntity<>("Desinscripción realizada con éxito", HttpStatus.OK);
+        if (removed) {
+            return new ResponseEntity<>("Successfully left the event", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("No se encontró la inscripción o los datos son incorrectos", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Registration not found", HttpStatus.NOT_FOUND);
         }
     }
 }
