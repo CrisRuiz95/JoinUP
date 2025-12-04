@@ -11,16 +11,24 @@ public interface IEventoService {
     // List all events
     List<Evento> listAll();
 
-    // Find event by ID
+    // Find an event by its ID
     Optional<Evento> fetchEvento(int idEvento);
 
-    // Save or update an event
+    // Save a new event or update an existing one
     Evento save(Evento event);
 
     // Delete an event by ID
     boolean delete(Integer id);
+
+    // Find events by title
     List<Evento> findByTitulo(String titulo);
+
+    // Update event details
     Evento updateEvento(int idEvento, Evento updatedEvento);
-    public List<Usuario> getParticipantes(int idEvento);
+
+    // Get all participants of a specific event
+    List<Usuario> getParticipantes(int idEvento);
+
+    // Find events by a specific tag
     List<Evento> findByTags(String tag);
 }

@@ -17,16 +17,18 @@ public class StripeServiceImpl implements IStripeService {
     @Override
     public String crearPagoTest(Double monto, String moneda) throws StripeException {
 
+        // Set Stripe API key
         Stripe.apiKey = apiKey;
 
+        // Configure PaymentIntent parameters
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount((long) (monto * 100))           // Stripe usa centavos
-                .setCurrency(moneda.toLowerCase())
-                .setPaymentMethod("pm_card_visa")          //  pago instantáneo de prueba
-                .setConfirm(true)                          // confirmar automáticamente
+                .setAmount((long) (monto * 100))           // Stripe uses smallest currency unit (cents)
+                .setCurrency(moneda.toLowerCase())         // set currency
+                .setPaymentMethod("pm_card_visa")          // test card payment
+                .setConfirm(true)                          // automatically confirm payment
                 .setAutomaticPaymentMethods(
                         PaymentIntentCreateParams.AutomaticPaymentMethods.builder()
-                                .setEnabled(true)
+                                .setEnabled(true)       // enable automatic payment methods
                                 .setAllowRedirects(
                                         PaymentIntentCreateParams.AutomaticPaymentMethods.AllowRedirects.NEVER
                                 )
@@ -34,6 +36,7 @@ public class StripeServiceImpl implements IStripeService {
                 )
                 .build();
 
+        // Create PaymentIntent in Stripe and return its ID
         PaymentIntent intent = PaymentIntent.create(params);
         return intent.getId();
     }

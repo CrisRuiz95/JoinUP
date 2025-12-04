@@ -18,37 +18,38 @@ public class UsuarioDeseadoServiceImpl implements IUsuarioDeseadoService {
     @Override
     public String toggleDeseado(int idCliente, int idEvento) {
         try {
-            // Verifica primero si ya existe
+            // Check if the desired event already exists for the user
             boolean existe = usuarioDeseadoRepository.existsByIdClienteAndIdEvento(idCliente, idEvento);
 
             if (existe) {
-                // Si existe, eliminar
+                // If it exists, remove it
                 usuarioDeseadoRepository.deleteByIdClienteAndIdEvento(idCliente, idEvento);
-                return "Evento eliminado de tu lista de deseados";
+                return "Event removed from your desired list";
             }
 
-            // Si no existe, agregar
+            // If it does not exist, add it
             UsuarioDeseado deseado = new UsuarioDeseado();
             deseado.setIdCliente(idCliente);
             deseado.setIdEvento(idEvento);
 
             usuarioDeseadoRepository.save(deseado);
-            return "Evento añadido a tu lista de deseados";
+            return "Event added to your desired list";
 
         } catch (DataIntegrityViolationException e) {
-            // Si por alguna razón salta un duplicado, lo atrapamos
-            return "Este evento ya está marcado como deseado";
+            // Handle potential duplicate insertion
+            return "This event is already marked as desired";
         }
     }
 
-
     @Override
     public boolean esDeseado(int idCliente, int idEvento) {
+        // Check if the event is in the user's desired list
         return usuarioDeseadoRepository.existsByIdClienteAndIdEvento(idCliente, idEvento);
     }
 
     @Override
     public void eliminarDeseado(int idCliente, int idEvento) {
+        // Remove the event from the user's desired list
         usuarioDeseadoRepository.deleteByIdClienteAndIdEvento(idCliente, idEvento);
     }
 }

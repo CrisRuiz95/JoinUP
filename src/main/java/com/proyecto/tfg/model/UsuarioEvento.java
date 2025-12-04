@@ -3,7 +3,9 @@ package com.proyecto.tfg.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
+/**
+ * Indicates that a user is registered in an event
+ */
 @Entity
 @Table(name = "Usuarios_Eventos")
 public class UsuarioEvento {
@@ -11,18 +13,21 @@ public class UsuarioEvento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUsuarios_Eventos")
-    private int idUsuariosEventos;
+    private int idUsuariosEventos;  // Unique identifier of the relation
 
-    // Relación con Usuario
+    // Relation with User
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
     private Usuario usuario;
 
-    // Relación con Evento
+    // Relation with Event
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_evento", nullable = false)
     private Evento evento;
 
+    // ========================
+    // Getters and Setters
+    // ========================
     public int getIdUsuariosEventos() {
         return idUsuariosEventos;
     }
@@ -47,4 +52,3 @@ public class UsuarioEvento {
         this.evento = evento;
     }
 }
-

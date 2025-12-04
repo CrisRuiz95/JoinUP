@@ -29,52 +29,53 @@ public class UsuarioEventoServiceImpl implements IUsuarioEventoService {
     @Override
     @Transactional
     public UsuarioEvento unirseAEvento(int idUsuario, int idEvento) {
-        // 1. Buscamos las entidades
+        //  Find user and event entities
         Usuario usuario = usuarioRepo.findById(idUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + idUsuario));
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + idUsuario));
 
         Evento evento = eventoRepo.findById(idEvento)
-                .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + idEvento));
+                .orElseThrow(() -> new RuntimeException("Event not found with ID: " + idEvento));
 
-        // 2. Validamos si ya existe (Usando QBE a través de estaInscrito)
+        //  Check if user is already registered
         if (estaInscrito(idUsuario, idEvento)) {
-            throw new RuntimeException("El usuario ya está inscrito en este evento.");
+            throw new RuntimeException("User is already registered for this event.");
         }
 
-        // 3. Validamos aforo
+        //  Validate event capacity
         if (evento.getMaxParticipantes() > 0) {
             long inscritos = evento.getUsuarios() != null ? evento.getUsuarios().size() : 0;
             if (inscritos >= evento.getMaxParticipantes()) {
-                throw new RuntimeException("El evento ha completado su aforo.");
+                throw new RuntimeException("Event has reached maximum capacity.");
             }
         }
 
-        // 4. Guardamos
+        // 4. Save registration
         return repo.save(createInscripcion(usuario, evento));
     }
 
+    // Helper method to create a UsuarioEvento instance
     private UsuarioEvento createInscripcion(Usuario usuario, Evento evento) {
         UsuarioEvento inscripcion = new UsuarioEvento();
-        // Nota: Asume que tienes los setters en UsuarioEvento (por Lombok o manuales)
         inscripcion.setUsuario(usuario);
         inscripcion.setEvento(evento);
         return inscripcion;
     }
 
-
     @Override
     @Transactional
     public boolean desunirseDeEvento(int idUsuario, int idEvento) {
-        // 1. Obtener Entidades (se mantiene)
+        //  Retrieve user and event entities
         Usuario usuario = usuarioRepo.findById(idUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + idUsuario));
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + idUsuario));
 
         Evento evento = eventoRepo.findById(idEvento)
-                .orElseThrow(() -> new RuntimeException("Evento no encontrado con ID: " + idEvento));
+                .orElseThrow(() -> new RuntimeException("Event not found with ID: " + idEvento));
 
+        //  Find existing registration
         Optional<UsuarioEvento> inscripcion = repo.findByUsuarioAndEvento(usuario, evento);
 
         if (inscripcion.isPresent()) {
+            //  Delete registration if exists
             repo.delete(inscripcion.get());
             return true;
         }
@@ -88,12 +89,12 @@ public class UsuarioEventoServiceImpl implements IUsuarioEventoService {
         Evento evento = eventoRepo.findById(idEvento).orElse(null);
 
         if (usuario != null && evento != null) {
-            // Creamos el molde de búsqueda (probe)
+            // Create a probe for Query-By-Example (QBE)
             UsuarioEvento probe = new UsuarioEvento();
             probe.setUsuario(usuario);
             probe.setEvento(evento);
 
-            // Usamos el método genérico exists() con el molde QBE.
+            // Check if a matching registration exists
             return repo.exists(Example.of(probe));
         }
         return false;

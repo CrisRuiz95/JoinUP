@@ -21,30 +21,30 @@ public class PagoServiceImpl implements IPagoService {
     private UsuariosRepository usuarioRepository;
 
     @Autowired
-    private StripeServiceImpl stripeService; // servicio que llama a Stripe en modo test
+    private StripeServiceImpl stripeService; // Service to interact with Stripe in test mode
 
     @Override
     public Pago procesarPago(Integer idUsuario, Double monto, String moneda) throws Exception {
-        // 1️⃣ Buscar usuario
+        // Step 1: Find user by ID
         Usuario usuario = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario not found"));
 
-        // 2️⃣ Crear PaymentIntent en Stripe (modo test)
+        // Step 2: Create a PaymentIntent in Stripe (test mode)
         String idTransaccion = stripeService.crearPagoTest(monto, moneda);
 
-        // 3️⃣ Guardar pago en base de datos
+        // Step 3: Save payment record in the database
         Pago pago = new Pago();
         pago.setUsuario(usuario);
         pago.setMonto(monto);
         pago.setMoneda(moneda);
-        pago.setEstado("exitoso"); // modo test
+        pago.setEstado("exitoso"); // test mode always marks as successful
         pago.setFecha(LocalDateTime.now());
         pago.setIdTransaccion(idTransaccion);
         pagoRepository.save(pago);
 
-        // 4️⃣ Cambiar rol del usuario si el pago fue exitoso
+        // Step 4: Update user role to PREMIUM if payment was successful
         if ("exitoso".equalsIgnoreCase(pago.getEstado())) {
-            usuario.setRol(Rol.PREMIUM); // asignar rol PREMIUM
+            usuario.setRol(Rol.PREMIUM);
             usuarioRepository.save(usuario);
         }
 

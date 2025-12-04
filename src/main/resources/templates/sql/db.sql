@@ -8,6 +8,7 @@ CREATE TABLE Usuarios (
     d_ap2 VARCHAR(45),
     d_email VARCHAR(45),
     d_password VARCHAR(45),
+    d_numTelefono VARCHAR(45),
 
     -- Campos de dirección integrados
     dir_tipoVia VARCHAR(45),

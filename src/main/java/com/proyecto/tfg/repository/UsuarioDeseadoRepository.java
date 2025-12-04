@@ -10,16 +10,15 @@ import java.util.List;
 @Repository
 public interface UsuarioDeseadoRepository extends JpaRepository<UsuarioDeseado, Integer> {
 
-    // Saber si un usuario ya ha marcado un evento como deseado
+    // Checks if a user has already marked an event as desired
     boolean existsByIdClienteAndIdEvento(int idCliente, int idEvento);
 
-    // Eliminar un deseado por usuario y evento
+    // Deletes a desired event by user and event
     void deleteByIdClienteAndIdEvento(int idCliente, int idEvento);
 
-    // Obtener todos los eventos deseados de un usuario
+    // Retrieves all desired events of a user
     List<UsuarioDeseado> findByIdCliente(int idCliente);
 
-    // Para buscar uno concreto si lo necesitas
+    // Finds a specific desired event
     Optional<UsuarioDeseado> findByIdClienteAndIdEvento(int idCliente, int idEvento);
 }
-
