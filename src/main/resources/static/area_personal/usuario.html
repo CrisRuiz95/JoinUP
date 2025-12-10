@@ -50,35 +50,71 @@
 
         <section class="panel-derecho"> <!-- PANEL DERECHO -->
 
-            <!--PANTALLA INFORMACION-->
-            <div id="pantalla-info" class="pantalla visible">
-            <h2>Información personal</h2>
-            <p>Aquí irá la Información personal: 
-                 El flujo que podíamos hacer es que la información registrada en el registro saliera en información personal y luego los ajustes asi como lo tengo por el hecho de si queremos cambiarlo, como por ejemplo si nos mudamos.
-            </p>
+    <!--PANTALLA INFORMACION-->
+<div id="pantalla-info" class="pantalla visible">
+
+    <h2>Información personal</h2>
+
+    <div class="info-personal-panel">
+
+        <div class="info-item">
+            <span class="info-label">Fecha de nacimiento:</span>
+            <span class="info-value">{{ fecha_nacimiento }}</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Ciudad:</span>
+            <span class="info-value">{{ ciudad }}</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Provincia:</span>
+            <span class="info-value">{{ provincia }}</span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">{{ telefono }}</span>
+        </div>
+
+        <div class="info-item bloque-completo">
+            <span class="info-label">Redes sociales:</span>
+            <span class="info-value">{{ redes sociales }}</span>
+        </div>
+
+        <div class="info-item bloque-completo">
+            <span class="info-label">Intereses:</span>
+            <div class="info-intereses"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    <!--PANTALLA DESEADOS-->
+    <div id="pantalla-deseados" class="pantalla">
+        <h2>Eventos Deseados</h2>
+        <p>Aquí irán tus eventos deseados...</p>
+    </div>
+
+    <!--PANTALLA AJUSTES-->
+    <div id="pantalla-ajustes" class="pantalla">
+        <h2>Ajustes</h2>
+        <form class="form-grid">
+
+            <div class="campo">
+                <label>Fecha de nacimiento</label>
+                <input type="date">
             </div>
-
-            <!--PANTALLA DESEADOS-->
-            <div id="pantalla-deseados" class="pantalla">
-                <h2>Eventos Deseados</h2>
-                <p>Aquí irán tus eventos deseados...</p>
-            </div>
-
-            <!--PANTALLA AJUSTES-->
-            <div id="pantalla-ajustes" class="pantalla">
-                <h2>Ajustes</h2>
-                <form class="form-grid">
-
-                <div class="campo">
-                    <label>Fecha de nacimiento</label>
-                    <input type="date">
-                </div> <!-- cierre fecha  -->
 
             <div class="fila-ubicacion">
                 <div class="campo campo-ciudad">
                     <label>Ciudad</label>
                     <input type="text">
-                </div> <!-- cierre ciudad -->
+                </div>
+
                 <div class="campo campo-provincia">
                     <label>Provincia</label>
                     <select>
@@ -135,54 +171,52 @@
                         <option>Zaragoza</option>
                     </select>
                 </div>
-            </div> <!-- cierre fila-ubicacion -->
+            </div>
 
-                <div class="campo">
-                    <label>Teléfono</label>
-                    <input type="text">
+            <div class="campo">
+                <label>Teléfono</label>
+                <input type="text">
+            </div>
+
+            <div class="campo redes-sociales">
+                <label>Redes sociales</label>
+
+                <div class="social-add">
+                    <select id="social-type">
+                        <option value="instagram">Instagram</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="twitter">Twitter / X</option>
+                        <option value="linkedin">LinkedIn</option>
+                    </select>
+
+                    <input type="url" id="social-url" placeholder="https://...">
+
+                    <button type="button" id="add-social">Añadir</button>
                 </div>
 
-                <div class="campo redes-sociales">
-  
-                    <div class="campo redes-sociales">
-                    <label>Redes sociales</label>
+                <ul id="social-list" class="social-list"></ul>
+            </div>
 
-                    <div class="social-add">
-                        <select id="social-type">
-                            <option value="instagram">Instagram</option>
-                            <option value="facebook">Facebook</option>
-                            <option value="twitter">Twitter / X</option>
-                            <option value="linkedin">LinkedIn</option>
-                        </select>
+            <div class="campo campo-intereses">
+                <label>Intereses</label>
+                <div class="intereses">
+                    <label class="interes"><img src="../imagenes/music_5662049.png"> Música</label>
+                    <label class="interes"><img src="../imagenes/sports_857492.png"> Deportes</label>
+                    <label class="interes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
+                    <label class="interes"><img src="../imagenes/cinema_469932.png"> Cine</label>
+                    <label class="interes"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
+                    <label class="interes"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
+                    <label class="interes"><img src="../imagenes/network_881930.png"> Networking</label>
+                    <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
+                </div>
+            </div>
 
-                        <input type="url" id="social-url" placeholder="https://...">
-
-                        <button type="button" id="add-social">Añadir</button>
-                    </div>
-
-                    <ul id="social-list" class="social-list"></ul>
-                    </div>
-                </div> <!-- cierre campo redes-sociales -->
-
-
-    <div class="campo campo-intereses">
-                    <label>Intereses</label>
-        <div class="intereses">
-            <label class="interes"><img src="../imagenes/music_5662049.png"> Música</label>
-            <label class="interes"><img src="../imagenes/sports_857492.png"> Deportes</label>
-            <label class="interes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
-            <label class="interes"><img src="../imagenes/cinema_469932.png"> Cine</label>
-            <label class="interes"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
-            <label class="interes"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
-            <label class="interes"><img src="../imagenes/network_881930.png"> Networking</label>
-            <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
-        </div>
+            <button type="submit" class="btn-guardar">Guardar cambios</button>
+        </form>
     </div>
 
-                <button type="submit" class="btn-guardar">Guardar cambios</button>
-            </form> 
-            </div>
-        </section>
+</section>
+
 
 
     </main>

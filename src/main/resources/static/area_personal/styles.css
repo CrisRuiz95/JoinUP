@@ -535,3 +535,32 @@ h2 {
     font-size: 1.7rem;    
 }        
 }
+
+/* Contenedor en dos columnas */
+.info-personal-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 4rem; 
+    margin-top: 2rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.bloque-completo {
+    grid-column: span 2;
+}
+
+.info-label {
+    font-weight: bold;
+    margin-bottom: 0.6rem;
+}
+
+.info-value {
+    background: #f0f4f6;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    display: inline-block;
+}
