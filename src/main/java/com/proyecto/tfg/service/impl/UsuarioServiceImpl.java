@@ -37,33 +37,40 @@ public class UsuarioServiceImpl implements IUsuarioService {
     // Helper method to create new user account with default role and encrypted password
     private Usuario createNewAccount(Usuario usuario) {
         Usuario newUsuario = new Usuario();
+
+        // === Personal data ===
         newUsuario.setNombre(usuario.getNombre());
         newUsuario.setAp1(usuario.getAp1());
         newUsuario.setAp2(usuario.getAp2());
         newUsuario.setEmail(usuario.getEmail());
         newUsuario.setNumTelefono(usuario.getNumTelefono());
 
-        // Encrypt password with BCrypt
+        // === Encrypt password with BCrypt ===
         newUsuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
-        // Set address fields
-        newUsuario.setTipoVia(usuario.getTipoVia());
-        newUsuario.setVia(usuario.getVia());
-        newUsuario.setNumVia(usuario.getNumVia());
-        newUsuario.setPiso(usuario.getPiso());
-        newUsuario.setPuerta(usuario.getPuerta());
-        newUsuario.setCodigoPostal(usuario.getCodigoPostal());
+        // === Birth date ===
+        newUsuario.setFecNac(usuario.getFecNac());
+
+        // === Address fields ===
         newUsuario.setProvincia(usuario.getProvincia());
         newUsuario.setPoblacion(usuario.getPoblacion());
         newUsuario.setInfoExtra(usuario.getInfoExtra());
 
-        // Set additional fields
+        // === User interests ===
         newUsuario.setIntV1(usuario.getIntV1());
         newUsuario.setIntV2(usuario.getIntV2());
         newUsuario.setIntV3(usuario.getIntV3());
+
+        // === Profile image ===
         newUsuario.setImagen(usuario.getImagen());
 
-        // Assign default role if none provided
+        // === Social media links ===
+        newUsuario.setUrlTwitter(usuario.getUrlTwitter());
+        newUsuario.setUrlFacebook(usuario.getUrlFacebook());
+        newUsuario.setUrlLinkedin(usuario.getUrlLinkedin());
+        newUsuario.setUrlInstagram(usuario.getUrlInstagram());
+
+        // === Assign role (default to GRATUITO if not provided) ===
         if (usuario.getRol() == null) {
             newUsuario.setRol(Rol.GRATUITO);
         } else {
@@ -72,6 +79,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         return newUsuario;
     }
+
 
     @Override
     public Optional<Usuario> fetchAccount(int idCliente) {
@@ -87,36 +95,41 @@ public class UsuarioServiceImpl implements IUsuarioService {
     public boolean updateAccount(Usuario usuario) {
         return repo.findById(usuario.getIdCliente()).map(existing -> {
 
-            // Update personal data if provided
+            // === Personal data ===
             if (usuario.getNombre() != null) existing.setNombre(usuario.getNombre());
             if (usuario.getAp1() != null) existing.setAp1(usuario.getAp1());
             if (usuario.getAp2() != null) existing.setAp2(usuario.getAp2());
             if (usuario.getEmail() != null) existing.setEmail(usuario.getEmail());
             if (usuario.getNumTelefono() != null) existing.setNumTelefono(usuario.getNumTelefono());
 
-            // Update password if provided (encrypt it)
+            // === Birth date ===
+            if (usuario.getFecNac() != null) existing.setFecNac(usuario.getFecNac());
+
+            // === Password (encrypt if provided) ===
             if (usuario.getPassword() != null && !usuario.getPassword().isBlank()) {
                 existing.setPassword(passwordEncoder.encode(usuario.getPassword()));
             }
 
-            // Update address if provided
-            if (usuario.getTipoVia() != null) existing.setTipoVia(usuario.getTipoVia());
-            if (usuario.getVia() != null) existing.setVia(usuario.getVia());
-            if (usuario.getNumVia() != null) existing.setNumVia(usuario.getNumVia());
-            if (usuario.getPiso() != null) existing.setPiso(usuario.getPiso());
-            if (usuario.getPuerta() != null) existing.setPuerta(usuario.getPuerta());
-            if (usuario.getCodigoPostal() != null) existing.setCodigoPostal(usuario.getCodigoPostal());
+            // === Address information ===
             if (usuario.getProvincia() != null) existing.setProvincia(usuario.getProvincia());
             if (usuario.getPoblacion() != null) existing.setPoblacion(usuario.getPoblacion());
             if (usuario.getInfoExtra() != null) existing.setInfoExtra(usuario.getInfoExtra());
 
-            // Update additional fields
+            // === User interests ===
             if (usuario.getIntV1() != null) existing.setIntV1(usuario.getIntV1());
             if (usuario.getIntV2() != null) existing.setIntV2(usuario.getIntV2());
             if (usuario.getIntV3() != null) existing.setIntV3(usuario.getIntV3());
+
+            // === Profile image ===
             if (usuario.getImagen() != null) existing.setImagen(usuario.getImagen());
 
-            // Update role only if provided
+            // === Social media links ===
+            if (usuario.getUrlTwitter() != null) existing.setUrlTwitter(usuario.getUrlTwitter());
+            if (usuario.getUrlFacebook() != null) existing.setUrlFacebook(usuario.getUrlFacebook());
+            if (usuario.getUrlLinkedin() != null) existing.setUrlLinkedin(usuario.getUrlLinkedin());
+            if (usuario.getUrlInstagram() != null) existing.setUrlInstagram(usuario.getUrlInstagram());
+
+            // === User role (updated only if provided) ===
             if (usuario.getRol() != null) existing.setRol(usuario.getRol());
 
             repo.save(existing);
@@ -124,6 +137,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
         }).orElse(false);
     }
+
 
     @Override
     public boolean deleteAccount(int idCliente) {

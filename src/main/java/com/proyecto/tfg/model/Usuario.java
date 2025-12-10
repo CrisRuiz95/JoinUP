@@ -2,7 +2,11 @@ package com.proyecto.tfg.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -36,6 +40,15 @@ public class Usuario {
     private String password;  // Password (usually encrypted)
 
     // ========================
+    // Fecha de nacimiento
+    // ========================
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    @Past(message = "La fecha de nacimiento debe ser anterior a hoy")
+    @Column(name = "fec_nac", nullable = false)
+    private LocalDate fecNac;
+
+
+    // ========================
     // Phone number validation
     // ========================
     @NotBlank(message = "Phone number is required")
@@ -44,41 +57,51 @@ public class Usuario {
             message = "Invalid phone number. Must contain 9 digits."
     )
     @Column(name = "d_numTelefono", nullable = false, length = 90)
-    private String numTelefono; // Valid phone number with 10-15 digits
+    private String numTelefono; // Valid phone number
 
     @Enumerated(EnumType.STRING)
     @Column(name = "d_rol", nullable = false)
     private Rol rol; // User role (e.g., FREE, ADMIN, etc.)
 
+
+
     // ========================
     // User address
     // ========================
-    @Column(name = "dir_tipoVia", length = 45)
-    private String tipoVia;  // Type of street (Street, Avenue, etc.)
-    @Column(name = "dir_via", length = 45)
-    private String via;      // Street name
-    @Column(name = "dir_numVia", length = 45)
-    private String numVia;   // Number
-    @Column(name = "dir_piso", length = 45)
-    private String piso;     // Floor
-    @Column(name = "dir_puerta", length = 45)
-    private String puerta;   // Door
-    @Column(name = "dir_codigo", length = 45)
-    private String codigoPostal; // Postal code
     @Column(name = "dir_provin", length = 45)
-    private String provincia;    // Province
+    private String provincia;
+
     @Column(name = "dir_pobla", length = 45)
     private String poblacion;    // City / Town
+
     @Column(name = "dir_infoExtra", length = 255)
     private String infoExtra;    // Additional address info
+
+    // ========================
+    // Social media links
+    // ========================
+    @Column(name = "url_twitter", length = 255)
+    private String urlTwitter;
+
+    @Column(name = "url_facebook", length = 255)
+    private String urlFacebook;
+
+    @Column(name = "url_linkedin", length = 255)
+    private String urlLinkedin;
+
+    @Column(name = "url_instagram", length = 255)
+    private String urlInstagram;
+
 
     // ========================
     // Interests, max 3
     // ========================
     @Column(name = "int_v1", length = 45)
     private String intV1;
+
     @Column(name = "int_v2", length = 45)
     private String intV2;
+
     @Column(name = "int_v3", length = 45)
     private String intV3;
 
@@ -89,55 +112,75 @@ public class Usuario {
     // Relations with other models
     // ========================
     @OneToMany(mappedBy = "usuario")
-    @com.fasterxml.jackson.annotation.JsonIgnore // Avoid recursion in JSON
-    private List<UsuarioEvento> eventos; // Events the user is enrolled in
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    private List<UsuarioEvento> eventos;
 
     // ========================
     // Getters and Setters
     // ========================
     public int getIdCliente() { return idCliente; }
     public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
+
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
     public String getAp1() { return ap1; }
     public void setAp1(String ap1) { this.ap1 = ap1; }
+
     public String getAp2() { return ap2; }
     public void setAp2(String ap2) { this.ap2 = ap2; }
+
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public LocalDate getFecNac() { return fecNac; }
+    public void setFecNac(LocalDate fecNac) { this.fecNac = fecNac; }
+
     public String getNumTelefono() { return numTelefono; }
     public void setNumTelefono(String numTelefono) { this.numTelefono = numTelefono; }
+
     public Rol getRol() { return rol; }
     public void setRol(Rol rol) { this.rol = rol; }
-    public String getTipoVia() { return tipoVia; }
-    public void setTipoVia(String tipoVia) { this.tipoVia = tipoVia; }
-    public String getVia() { return via; }
-    public void setVia(String via) { this.via = via; }
-    public String getNumVia() { return numVia; }
-    public void setNumVia(String numVia) { this.numVia = numVia; }
-    public String getPiso() { return piso; }
-    public void setPiso(String piso) { this.piso = piso; }
-    public String getPuerta() { return puerta; }
-    public void setPuerta(String puerta) { this.puerta = puerta; }
-    public String getCodigoPostal() { return codigoPostal; }
-    public void setCodigoPostal(String codigoPostal) { this.codigoPostal = codigoPostal; }
-    public String getProvincia() { return provincia; }
-    public void setProvincia(String provincia) { this.provincia = provincia; }
+
     public String getPoblacion() { return poblacion; }
     public void setPoblacion(String poblacion) { this.poblacion = poblacion; }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
     public String getInfoExtra() { return infoExtra; }
     public void setInfoExtra(String infoExtra) { this.infoExtra = infoExtra; }
+
     public String getIntV1() { return intV1; }
     public void setIntV1(String intV1) { this.intV1 = intV1; }
+
     public String getIntV2() { return intV2; }
     public void setIntV2(String intV2) { this.intV2 = intV2; }
+
     public String getIntV3() { return intV3; }
     public void setIntV3(String intV3) { this.intV3 = intV3; }
+    public String getUrlTwitter() { return urlTwitter; }
+    public void setUrlTwitter(String urlTwitter) { this.urlTwitter = urlTwitter; }
+
+    public String getUrlFacebook() { return urlFacebook; }
+    public void setUrlFacebook(String urlFacebook) { this.urlFacebook = urlFacebook; }
+
+    public String getUrlLinkedin() { return urlLinkedin; }
+    public void setUrlLinkedin(String urlLinkedin) { this.urlLinkedin = urlLinkedin; }
+
+    public String getUrlInstagram() { return urlInstagram; }
+    public void setUrlInstagram(String urlInstagram) { this.urlInstagram = urlInstagram; }
+
     public String getImagen() { return imagen; }
     public void setImagen(String imagen) { this.imagen = imagen; }
+
     public List<UsuarioEvento> getEventos() { return eventos; }
     public void setEventos(List<UsuarioEvento> eventos) { this.eventos = eventos; }
-
 }
