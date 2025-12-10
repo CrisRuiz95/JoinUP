@@ -37,6 +37,11 @@ public class Usuario {
     private String email;  // Unique email
 
     @Column(name = "d_password", nullable = false, length = 90)
+    @NotBlank(message = "Password is required")
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-]).{8,}$",
+            message = "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character"
+    )
     private String password;  // Password (usually encrypted)
 
     // ========================
