@@ -25,18 +25,22 @@
         <div class="formulario-login">
             <h2>Login</h2>
 
-         <form action="#" method="post">
+         <form id="loginForm">
             
                 <div class="inputs-login">
-                <input type="text" id="username" name="username" placeholder="Correo electrónico o usuario">
-                <input type="password" id="password" name="password" placeholder="Contraseña">
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
                 <a href="#" class="olvido_contrasenha">¿Has olvidado la contraseña?</a>
+                
+                <!-- Mensaje de error -->
+                <div id="errorMessage" style="color: red; display: none; margin: 10px 0;"></div>
+                
                 <button type="submit">Iniciar Sesión</button>
                 
-                <button id="token-google" class="google-login" type="submit"> <img src="../imagenes/icons8-logo-de-google-94.png" alt="Google">Iniciar sesión con Google</button>
+                <button id="token-google" class="google-login" type="button"> <img src="../imagenes/icons8-logo-de-google-94.png" alt="Google">Iniciar sesión con Google</button>
                 </div>
 
-                <button class="crear-cuenta" type="submit">Crear una cuenta</button>
+                <button class="crear-cuenta" type="button" onclick="window.location.href='../registro/registro.html'">Crear una cuenta</button>
             </form>
         </div>
     </div>
@@ -46,6 +50,9 @@
 
    <!-- script oficial de google identity-->
    <script src="https://accounts.google.com/gsi/client" async defer></script>
+   
+   <!-- Script de login -->
+   <script src="script.js"></script>
 
 </body>
 </html>

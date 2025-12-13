@@ -82,3 +82,28 @@ intereses.forEach(interes => {
         seleccionados.push(interes);
     });
 });
+
+
+//Cerrar sesión
+document.querySelector(".btn-logout").addEventListener("click", () => {
+    logout(); // Función definida en auth.js
+});
+
+
+//Para evitar acceso directo por URL dde un usuario no registrado, redirigimos al login si no hay usuario logueado
+document.addEventListener("DOMContentLoaded", () => {
+    requireLogin(); 
+    
+    // Cargar datos del usuario en la página
+    const usuario = getLoggedUser();
+    if (usuario) {
+        document.querySelector(".usuario-nombre").textContent = usuario.nombre;
+        document.querySelector(".usuario-email").textContent = usuario.email;
+        
+        // Ocultar "Hacer premium" si el usuario ya es PREMIUM
+        const btnPremium = document.querySelector('a[href="../pagos/pagos-1.html"]');
+        if (usuario.rol === "PREMIUM" && btnPremium) {
+            btnPremium.style.display = "none";
+        }
+    }
+});
