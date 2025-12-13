@@ -12,7 +12,7 @@
 <header>
     <div class="imagen-header">
     <a href="../index.html"><div class="logo"> <img src="../imagenes/logotipoJOINUP.png" alt="logo"> </div></a>
-    <a class="login-link" href="#">¿Ya tienes cuenta? Inicia sesión</a>
+    <a class="login-link" href="../login/login.html">¿Ya tienes cuenta? Inicia sesión</a>
     </div>
 </header>
 
@@ -34,20 +34,26 @@
     <section class="panel">
         <h2>Datos personales</h2>
 
-        <label>Nombre completo</label>
-        <input type="text">
+        <label>Nombre</label>
+        <input type="text" id="nombre">
+
+        <label>Primer apellido</label>
+        <input type="text" id="ap1">
+
+        <label>Segundo apellido</label>
+        <input type="text" id="ap2">
 
         <label>Fecha de nacimiento</label>
-        <input type="date">
+        <input type="date" id="fechaNacimiento">
 
         <div class="ciudad-provincia">
             <div class="cp-nombre">
                 <label>Ciudad</label>
-                <input type="text">
+                <input type="text" id="ciudad">
             </div>
             <div class="cp-nombre">
                 <label>Provincia</label>
-                 <select>
+                 <select id="provincia">
                         <option value="" disabled selected>Seleccione una provincia</option>
                         <option>A Coruña</option>
                         <option>Álava</option>
@@ -104,15 +110,17 @@
         </div>
 
         <label>Teléfono</label>
-        <input type="text">
+        <input type="text" id="telefono">
 
         <label>Correo electrónico</label>
-        <input type="email">
+        <input type="email" id="email">
 
         <label>Contraseña</label>
-        <input type="password">
+        <input type="password" id="password">
 
-        <div class="btn" data-paso="2"><button class="btn-panel-uno" >Confirmar</button></div>
+        <div id="errorMensaje" style="color: red; display: none; margin: 10px 0;"></div>
+
+        <div class="btn" data-paso="2"><button class="btn-panel-uno">Confirmar</button></div>
     </section>
 
     <!-- PANEL 2 -->
@@ -121,14 +129,14 @@
         <p>Escoge tres intereses:</p>
 
         <div class="intereses">
-            <label class="interes"><img src="../imagenes/music_5662049.png"> Música</label>
-            <label class="interes"><img src="../imagenes/sports_857492.png"> Deportes</label>
-            <label class="interes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
-            <label class="interes"><img src="../imagenes/cinema_469932.png"> Cine</label>
-            <label class="interes"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
-            <label class="interes"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
-            <label class="interes"><img src="../imagenes/network_881930.png"> Networking</label>
-            <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
+            <label class="interes" data-value="Música"><img src="../imagenes/music_5662049.png"> Música</label>
+            <label class="interes" data-value="Deportes"><img src="../imagenes/sports_857492.png"> Deportes</label>
+            <label class="interes" data-value="Viajes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
+            <label class="interes" data-value="Cine"><img src="../imagenes/cinema_469932.png"> Cine</label>
+            <label class="interes" data-value="Fiesta"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
+            <label class="interes" data-value="Fotografía"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
+            <label class="interes" data-value="Networking"><img src="../imagenes/network_881930.png"> Networking</label>
+            <label class="interes" data-value="Otros"><img src="../imagenes/more_5976816.png"> Otros</label>
         </div>
 
         <div class="btn" data-paso="3"><button class="btn-panel-dos">Confirmar</button></div>
@@ -139,7 +147,7 @@
         <h2>Tipo de cuenta</h2>
 
         <label class="opcion">
-        <input type="radio" name="tipo" value="gratis">
+        <input type="radio" name="tipo" value="GRATUITO" checked>
         <div class="info">
             <strong>Gratis</strong>
             <p>No se puede retribuir con dinero al creador.</p>
@@ -148,7 +156,7 @@
         </label>
 
         <label class="opcion">
-        <input type="radio" name="tipo" value="premium">
+        <input type="radio" name="tipo" value="PREMIUM">
         <div class="info">
             <strong>Premium</strong>
             <p>Se puede ganar dinero con los eventos</p>
@@ -163,6 +171,11 @@
     <section class="panel">
         <h2>Confirmación</h2>
         <p class="confirmacion">Revisa todos tus datos antes de proceder a enviarlos</p>
+
+        <div id="resumenDatos"></div>
+
+        <div id="mensajeExito" style="color: green; display: none; margin: 10px 0;"></div>
+        <div id="mensajeError" style="color: red; display: none; margin: 10px 0;"></div>
 
         <div class="btn"><button class="btn-panel-cuatro">Enviar</button></div>
     </section>
