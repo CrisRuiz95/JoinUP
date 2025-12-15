@@ -45,17 +45,39 @@ function requireLogin() {
 function updateNavbar() {
     const usuario = getLoggedUser();
     
-    // Buscar el enlace de cuenta
+    // Buscar el enlace de cuenta y el icono
     const cuentaLink = document.getElementById("cuentaLink");
+    const cuentaIcono = document.getElementById("cuentaIcono");
     
     if (usuario && cuentaLink) {
-        // Si está logueado, mostrar nombre del usuario y redirigir a área personal
-        cuentaLink.textContent = `Hola, ${usuario.nombre}`;
+        // Si está logueado, actualizar contenido preservando estructura
         cuentaLink.href = "/area_personal/usuario.html";
+        
+        // Buscar si hay un span interno (página crear-eventos)
+        const spanTexto = cuentaLink.querySelector("span");
+        if (spanTexto) {
+            spanTexto.textContent = `Hola, ${usuario.nombre}`;
+        } else {
+            // Si no hay span, actualizar directamente (index, busqueda)
+            cuentaLink.textContent = `Hola, ${usuario.nombre}`;
+        }
+        
+        // Actualizar imagen de perfil si existe
+        if (cuentaIcono && usuario.imagen) {
+            cuentaIcono.src = usuario.imagen;
+            cuentaIcono.style.borderRadius = "50%"; // Hacer circular la imagen
+            cuentaIcono.style.objectFit = "cover"; // Ajustar imagen
+        }
     } else if (cuentaLink) {
-        // Si no está logueado, mostrar "Mi cuenta" y redirigir a login
-        cuentaLink.textContent = "Mi cuenta";
+        // Si no está logueado, mostrar "Mi cuenta"
         cuentaLink.href = "/login/login.html";
+        
+        const spanTexto = cuentaLink.querySelector("span");
+        if (spanTexto) {
+            spanTexto.textContent = "Mi cuenta";
+        } else {
+            cuentaLink.textContent = "Mi cuenta";
+        }
     }
 }
 

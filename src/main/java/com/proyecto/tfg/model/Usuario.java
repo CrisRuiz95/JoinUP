@@ -110,7 +110,7 @@ public class Usuario {
     @Column(name = "int_v3", length = 45)
     private String intV3;
 
-    @Column(name = "imagen", length = 255)
+    @Column(name = "imagen", columnDefinition = "LONGTEXT")
     private String imagen; // Profile image URL
 
     // ========================

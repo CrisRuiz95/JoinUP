@@ -29,7 +29,7 @@ public class Evento {
     @Column(name = "ev_titulo", length = 80, unique = true)
     private String titulo; // Event title
 
-    @Column(name = "ev_imagen", length = 255)
+    @Column(name = "ev_imagen", columnDefinition = "LONGTEXT")
     private String imagen; // Event image URL
 
     @Column(name = "ev_desc", length = 200)
