@@ -1,6 +1,7 @@
 package com.proyecto.tfg.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,15 @@ public class Evento {
     @Temporal(TemporalType.DATE)
     private Date fecha; // Event date
 
+    @NotBlank(message = "El título es obligatorio")
     @Column(name = "ev_titulo", length = 80, unique = true)
     private String titulo; // Event title
 
-    @Column(name = "ev_imagen", columnDefinition = "LONGTEXT")
+    @NotBlank(message = "La imagen del evento es obligatoria")
+    @Column (name = "ev_imagen", columnDefinition = "LONGTEXT")
     private String imagen; // Event image URL
 
+    @NotBlank(message = "La descripción es obligatoria")
     @Column(name = "ev_desc", length = 200)
     private String descripcion; // Event description
 
@@ -44,11 +48,16 @@ public class Evento {
     // ========================
     // Tags and price
     // ========================
-    @Column(name = "ev_tag1", length = 45)
+    @NotBlank(message = "El tag1 es obligatorio")
+    @Column(name = "ev_tag1", length = 45, nullable = false)
     private String tag1;
-    @Column(name = "ev_tag2", length = 45)
+
+    @NotBlank(message = "El tag2 es obligatorio")
+    @Column(name = "ev_tag2", length = 45, nullable = false)
     private String tag2;
-    @Column(name = "ev_tag3", length = 45)
+
+    @NotBlank(message = "El tag3 es obligatorio")
+    @Column(name = "ev_tag3", length = 45, nullable = false)
     private String tag3;
 
     @Column(name = "ev_precio", length = 45)
@@ -57,22 +66,39 @@ public class Evento {
     // ========================
     // Event address
     // ========================
+    @NotBlank(message = "El tipo de vía es obligatorio")
     @Column(name = "dir_tipoVia", length = 45)
     private String tipoVia;
+
+    @NotBlank(message = "La vía es obligatoria")
     @Column(name = "dir_via", length = 45)
     private String via;
+
+    @NotBlank(message = "El número de vía es obligatorio")
     @Column(name = "dir_numVia", length = 45)
     private String numVia;
+
+    @NotBlank(message = "El piso es obligatorio")
     @Column(name = "dir_piso", length = 45)
     private String piso;
+
+    @NotBlank(message = "La puerta es obligatoria")
     @Column(name = "dir_puerta", length = 45)
     private String puerta;
+
+    @NotBlank(message = "El código postal es obligatorio")
     @Column(name = "dir_codigo", length = 45)
     private String codigoPostal;
+
+    @NotBlank(message = "La provincia es obligatoria")
     @Column(name = "dir_provin", length = 45)
     private String provincia;
+
+    @NotBlank(message = "La población es obligatoria")
     @Column(name = "dir_pobla", length = 45)
     private String poblacion;
+
+    @NotBlank(message = "La información adicional es obligatoria")
     @Column(name = "dir_infoExtra", length = 255)
     private String infoExtra;
 
@@ -80,7 +106,7 @@ public class Evento {
     // Relationship with registered users
     // ========================
     @OneToMany(mappedBy = "evento")
-    @com.fasterxml.jackson.annotation.JsonIgnore // Avoid recursion when serializing to JSON
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<UsuarioEvento> usuarios;
 
     // ========================
