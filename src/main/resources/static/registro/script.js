@@ -10,6 +10,7 @@ let datosRegistro = {
     email: "",
     password: "",
     numTelefono: "",
+    fecNac: "",
     rol: "GRATUITO",
     poblacion: "",
     provincia: "",
@@ -44,18 +45,29 @@ function validarPanel1() {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const telefono = document.getElementById("telefono").value.trim();
+    const fechaNac = document.getElementById("fechaNacimiento").value;
     const errorMensaje = document.getElementById("errorMensaje");
 
     errorMensaje.style.display = "none";
 
-    if (!nombre || !email || !password || !telefono) {
+    if (!nombre || !email || !password || !telefono || !fechaNac) {
         errorMensaje.textContent = "Por favor, completa todos los campos obligatorios";
         errorMensaje.style.display = "block";
         return false;
     }
 
-    if (password.length < 6) {
-        errorMensaje.textContent = "La contraseña debe tener al menos 6 caracteres";
+    // Validar formato de teléfono  (9 dígitos)
+    const telefonoRegex = /^\d{9}$/;
+    if (!telefonoRegex.test(telefono)) {
+        errorMensaje.textContent = "El teléfono debe contener exactamente 9 dígitos";
+        errorMensaje.style.display = "block";
+        return false;
+    }
+
+    // Validar contraseñ para que concuerde con la vlidacion del back (mínimo 8 caracteres, mayúsculas, minúsculas, número y carácter especial)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+        errorMensaje.textContent = "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un carácter especial";
         errorMensaje.style.display = "block";
         return false;
     }
@@ -67,6 +79,7 @@ function validarPanel1() {
     datosRegistro.email = email;
     datosRegistro.password = password;
     datosRegistro.numTelefono = telefono;
+    datosRegistro.fecNac = fechaNac;
     datosRegistro.poblacion = document.getElementById("ciudad").value.trim();
     datosRegistro.provincia = document.getElementById("provincia").value;
 
@@ -96,7 +109,7 @@ intereses.forEach(interes => {
 });
 
 function validarPanel2() {
-    if (seleccionados.length < 2) {
+    if (seleccionados.length < 3) {
         alert("Por favor, selecciona 3 intereses");
         return false;
     }
@@ -137,23 +150,63 @@ document.querySelector(".btn-panel-cuatro").addEventListener("click", async () =
     mensajeExito.style.display = "none";
     mensajeError.style.display = "none";
 
+    // Guardar si el usuario seleccionó Premium
+    const seleccionoPremium = datosRegistro.rol === "PREMIUM";
+    
+    // Crear usuario siempre como GRATUITO primero
+    const datosParaCrear = { ...datosRegistro, rol: "GRATUITO" };
+
     try {
         const response = await fetch(`${API_URL}/create`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(datosRegistro)
+            body: JSON.stringify(datosParaCrear)
         });
 
         if (response.ok) {
-            mensajeExito.textContent = "¡Registro exitoso! Redirigiendo al login...";
+            const usuarioCreado = await response.json();
+            mensajeExito.textContent = "¡Registro exitoso!";
             mensajeExito.style.display = "block";
             
-            // Redirigir al login después de 2 segundos
-            setTimeout(() => {
-                window.location.href = "../login/login.html";
-            }, 2000);
+            // Hacer login automático
+            const loginResponse = await fetch(`${API_URL}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: datosRegistro.email,
+                    password: datosRegistro.password
+                })
+            });
+
+            if (loginResponse.ok) {
+                const usuario = await loginResponse.json();
+                
+                // Guardar en localStorage
+                localStorage.setItem("usuario", JSON.stringify(usuario));
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("userId", usuario.idCliente);
+                
+                // Redirigir según la selección
+                setTimeout(() => {
+                    if (seleccionoPremium) {
+                        // Redirigir a la pasarela de pago
+                        window.location.href = "../pagos/pagos-1.html";
+                    } else {
+                        // Redirigir al área personal
+                        window.location.href = "../area_personal/usuario.html";
+                    }
+                }, 1500);
+            } else {
+                mensajeError.textContent = "Usuario creado pero error en login automático. Por favor, inicia sesión manualmente.";
+                mensajeError.style.display = "block";
+                setTimeout(() => {
+                    window.location.href = "../login/login.html";
+                }, 3000);
+            }
             
         } else {
             const errorData = await response.json();

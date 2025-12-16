@@ -32,7 +32,7 @@ public class Evento {
     private String titulo; // Event title
 
     @NotBlank(message = "La imagen del evento es obligatoria")
-    @Column(name = "ev_imagen", length = 255)
+    @Column (name = "ev_imagen", columnDefinition = "LONGTEXT")
     private String imagen; // Event image URL
 
     @NotBlank(message = "La descripción es obligatoria")

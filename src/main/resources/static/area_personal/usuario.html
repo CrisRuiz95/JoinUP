@@ -59,32 +59,32 @@
 
         <div class="info-item">
             <span class="info-label">Fecha de nacimiento:</span>
-            <span class="info-value">{{ fecha_nacimiento }}</span>
+            <span class="info-value" id="info-fecha">-</span>
         </div>
 
         <div class="info-item">
             <span class="info-label">Ciudad:</span>
-            <span class="info-value">{{ ciudad }}</span>
+            <span class="info-value" id="info-ciudad">-</span>
         </div>
 
         <div class="info-item">
             <span class="info-label">Provincia:</span>
-            <span class="info-value">{{ provincia }}</span>
+            <span class="info-value" id="info-provincia">-</span>
         </div>
 
         <div class="info-item">
             <span class="info-label">Teléfono:</span>
-            <span class="info-value">{{ telefono }}</span>
+            <span class="info-value" id="info-telefono">-</span>
         </div>
 
         <div class="info-item bloque-completo">
             <span class="info-label">Redes sociales:</span>
-            <span class="info-value">{{ redes sociales }}</span>
+            <span class="info-value" id="info-redes">-</span>
         </div>
 
         <div class="info-item bloque-completo">
             <span class="info-label">Intereses:</span>
-            <div class="info-intereses"></div>
+            <div class="info-intereses" id="info-intereses"></div>
         </div>
 
     </div>
@@ -102,22 +102,22 @@
     <!--PANTALLA AJUSTES-->
     <div id="pantalla-ajustes" class="pantalla">
         <h2>Ajustes</h2>
-        <form class="form-grid">
+        <form class="form-grid" id="form-ajustes">
 
             <div class="campo">
                 <label>Fecha de nacimiento</label>
-                <input type="date">
+                <input type="date" id="ajuste-fecha">
             </div>
 
             <div class="fila-ubicacion">
                 <div class="campo campo-ciudad">
                     <label>Ciudad</label>
-                    <input type="text">
+                    <input type="text" id="ajuste-ciudad">
                 </div>
 
                 <div class="campo campo-provincia">
                     <label>Provincia</label>
-                    <select>
+                    <select id="ajuste-provincia">
                         <option value="">Seleccione una provincia</option>
                         <option>A Coruña</option>
                         <option>Álava</option>
@@ -175,7 +175,7 @@
 
             <div class="campo">
                 <label>Teléfono</label>
-                <input type="text">
+                <input type="text" id="ajuste-telefono">
             </div>
 
             <div class="campo redes-sociales">
@@ -200,14 +200,14 @@
             <div class="campo campo-intereses">
                 <label>Intereses</label>
                 <div class="intereses">
-                    <label class="interes"><img src="../imagenes/music_5662049.png"> Música</label>
-                    <label class="interes"><img src="../imagenes/sports_857492.png"> Deportes</label>
-                    <label class="interes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
-                    <label class="interes"><img src="../imagenes/cinema_469932.png"> Cine</label>
-                    <label class="interes"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
-                    <label class="interes"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
-                    <label class="interes"><img src="../imagenes/network_881930.png"> Networking</label>
-                    <label class="interes"><img src="../imagenes/more_5976816.png"> Otros</label>
+                    <label class="interes" data-value="Música"><img src="../imagenes/music_5662049.png"> Música</label>
+                    <label class="interes" data-value="Deportes"><img src="../imagenes/sports_857492.png"> Deportes</label>
+                    <label class="interes" data-value="Viajes"><img src="../imagenes/airplane_1358696.png"> Viajes</label>
+                    <label class="interes" data-value="Cine"><img src="../imagenes/cinema_469932.png"> Cine</label>
+                    <label class="interes" data-value="Fiesta"><img src="../imagenes/confetti_5003057.png"> Fiesta</label>
+                    <label class="interes" data-value="Fotografía"><img src="../imagenes/photo-camera_2458574.png"> Fotografía</label>
+                    <label class="interes" data-value="Networking"><img src="../imagenes/network_881930.png"> Networking</label>
+                    <label class="interes" data-value="Otros"><img src="../imagenes/more_5976816.png"> Otros</label>
                 </div>
             </div>
 

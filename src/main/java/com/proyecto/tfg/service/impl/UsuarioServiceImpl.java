@@ -27,7 +27,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Optional<Usuario> optionalUsuario = repo.findByEmail(usuario.getEmail());
         if (optionalUsuario.isPresent()) {
             throw new UserAlreadyExistsException(
-                    "Customer already registered with given email " + usuario.getEmail());
+                    "Usuario ya registrado con este e-mail: " + usuario.getEmail());
         }
 
         // Save user with encrypted password

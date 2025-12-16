@@ -21,9 +21,9 @@
 				<div class="col"></div>
 				<!-- MI CUENTA -->
 	    <div class="col-2">
-	        <a href="../area_personal/usuario.html" class="d-flex align-center gap-1">
+	        <a href="../area_personal/usuario.html" class="d-flex align-center gap-1" id="cuentaLink">
 		          <span class="font-modern color-blue text-xl">Mi cuenta</span>
-	            <img class="ml-4" src="img/user-icon.png" alt="" height="50px">
+	            <img class="ml-4" src="img/user-icon.png" alt="" height="50px" id="cuentaIcono">
 	        </a>
 	    </div>
 
@@ -42,7 +42,7 @@
 		</div>
 		
 		<div class="row mx-6 justify-center">
-			<form class="col mr-2 p-4 bg-white rounded-lg">
+					<form class="col mr-2 p-4 bg-white rounded-lg" id="formCrearEvento">
 					
 						<div class="row mb-3">
 							<div class="col">
@@ -60,8 +60,14 @@
 								<label class="font-actor" for="categoriaEvento">Categoría</label>
 								<br>
 								<select class="input-joinup" name="categoriaEvento" id="categoriaEvento">
-								  <option value="paseo">Paseo</option>
-								  <option value="restaurante" selected>Restaurante</option>
+								  <option value="Música">Música</option>
+								  <option value="Deportes">Deportes</option>
+								  <option value="Viajes">Viajes</option>
+								  <option value="Cine">Cine</option>
+								  <option value="Fiesta">Fiesta</option>
+								  <option value="Fotografía">Fotografía</option>
+								  <option value="Networking">Networking</option>
+								  <option value="Otros" selected>Otros</option>
 								</select>
 							</div>
 						</div>
@@ -72,10 +78,10 @@
 						</div>
 						<div class="row">
 							<div class="col-3">
-								<input class="input-joinup" type="date" name="" id="">
+								<input class="input-joinup" type="date" name="" id="fechaEvento">
 							</div>
 							<div class="col-2 ml-2">
-								<input class="input-joinup" type="time" name="" id="">
+								<input class="input-joinup" type="time" name="" id="horaEvento">
 							</div>
 						</div>
 						<div class="row">
@@ -114,14 +120,14 @@
 						             accept="image/*"
 						             style="position:absolute; inset:0; opacity:0; cursor:pointer;"
 						      >
-						    </label>
-						  </div>
+					    </label>
+					  </div>
+					</div>
+					<div class="row mt-2">
+						<div class="col d-flex justify-end">
+							<button class="btn-joinup bg-green font-modern text-xl" type="button" id="btnContinuarPaso1">Continuar</button>
 						</div>
-						<div class="row mt-2">
-							<div class="col d-flex justify-end">
-								<button class="btn-joinup bg-green font-modern text-xl" type="submit">Continuar</button>
-							</div>
-						</div>
+					</div>
 			</form>
 			<form class="col ml-2 p-4 bg-white rounded-lg d-flex flex-column">
 						<div class="row mb-3">
@@ -148,7 +154,7 @@
 						    <p class="font-actor mb-2">Opciones de acceso</p>
 						
 						    <label class="radio-joinup">
-						      <input type="radio" name="acceso" value="gratuito">
+						      <input type="radio" name="acceso" value="gratuito" checked>
 						      <span class="font-actor">Gratuito</span>
 						    </label>
 						
@@ -156,24 +162,25 @@
 						      <input type="radio" name="acceso" value="pago">
 						      <span class="font-actor">De pago</span>
 						    </label>
-						
-						    <p class="font-actor mt-3 mb-2">Privacidad</p>
+
+							<!-- Por ahora el tema de la privacidad de los eventos no se incluye en el proyecto-->
+						    <!-- <p class="font-actor mt-3 mb-2">Privacidad</p>
 						
 						    <label class="radio-joinup">
-						      <input type="radio" name="privacidad" value="publico">
+						      <input type="radio" name="privacidad" value="publico" checked>
 						      <span class="font-actor">Público</span>
 						    </label>
 						
 						    <label class="radio-joinup">
 						      <input type="radio" name="privacidad" value="privado">
 						      <span class="font-actor">Privado</span>
-						    </label>
+						    </label> -->
 						  </div>
 						</div>
 						<div class="row row-bottom">
 							<div class="col d-flex justify-end">
-								<button class="btn-joinup bg-gray font-modern text-xl" type="submit">Guardar borrador</button>
-								<button class="btn-joinup bg-green font-modern text-xl ml-4" type="submit">Continuar</button>
+								<button class="btn-joinup bg-gray font-modern text-xl" type="button" id="btnGuardarBorrador">Guardar borrador</button>
+								<button class="btn-joinup bg-green font-modern text-xl ml-4" type="button" id="btnContinuar">Continuar</button>
 							</div>
 						</div>
 				</form>
@@ -189,24 +196,24 @@
 				<div class="row">
 					<div class="col">
 						<div class="card-evento">
-						  <img src="img/restaurant.png" alt="Imagen del evento" class="card-evento__img">
+						  <img src="img/restaurant.png" alt="Imagen del evento" class="card-evento__img" id="previewImagen">
 						
 						  <div class="card-evento-body">
-						    <h2 class="card-evento-titulo">Cena en el restaurante Sibuya</h2>
+						    <h2 class="card-evento-titulo" id="previewTitulo">Cena en el restaurante Sibuya</h2>
 						
-						    <p class="card-evento-descripcion">
+						    <p class="card-evento-descripcion" id="previewDescripcion">
 						      Se busca grupo amigable y divertido para compartir una cena en este restaurante
 						    </p>
 						
 						    <div class="card-evento-info">
 						      <div class="card-evento-fila">
 						        <img src="img/calendar-icon.png" alt="" class="card-evento-icono">
-						        <span class="font-actor">2 abril, 2025</span>
+						        <span class="font-actor" id="previewFecha">2 abril, 2025</span>
 						      </div>
 						
 						      <div class="card-evento-fila">
 						        <img src="img/map-point-icon.png" alt="" class="card-evento-icono">
-						        <span class="font-actor">Zamora</span>
+						        <span class="font-actor" id="previewUbicacion">Zamora</span>
 						      </div>
 						    </div>
 						
@@ -223,9 +230,10 @@
 				</div>
 			</div>
 			<div class="col-3 d-flex flex-column align-end justify-end">
-				<button class="btn-joinup bg-yellow text-xl font-modern mx-4" type="submit">Publicar</button>
+				<button class="btn-joinup bg-yellow text-xl font-modern mx-4" type="button" id="btnPublicar">Publicar</button>
 			</div>
 		</div>
+    <script src="../js/auth.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
